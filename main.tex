@@ -97,13 +97,13 @@ Anonymous Authors%
 % ABSTRACT
 % =============================================================================
 \begin{abstract}
-Reflection reverses completion for $\pi_{0.5}$: $4/27$ \tokL{} and $25/27$ \tokR{} successes become $25/27$ and $9/27$ after only the movable-object centers are mirrored in world coordinates, with the policy, prompts, controller, and seeds unchanged.
-A binary directional gap is therefore a property of the policy--layout pair and cannot, by itself, be read as a measure of language grounding.
-We study this attribution problem in relational placement using matched controls that vary the linguistic reference frame and object geometry separately while retaining the frozen task predicate.
-Across 324 base-frame pairs from eight policies in two simulators, the paired action traces differ in every case, providing an observed trace-difference positive control rather than a standalone grounding score.
-Reference inversion collapses endpoint separation for $\pi_{0.5}$ from $23.28$\,cm to $0.19$\,cm on matched physical goals.
-Ceilings hide placement change: in the matched 27-seed symmetric-scene core, Nano has exactly zero binary interaction ($p=1$) alongside a $-13.9$\,cm requested-side-depth interaction.
-A powered $\pi_{0.5}$ residual remains under the symmetric-scene intervention and fails the prespecified equivalence margins, so the controls neither establish complete removal nor identify a model-side mechanism.
+Binary success gaps between opposite spatial commands are often treated as direct evidence of language grounding, even though completion also depends on scene geometry.
+For $\pi_{0.5}$, reflecting only the movable-object centers reverses completion: $4/27$ \tokL{} and $25/27$ \tokR{} become $25/27$ and $9/27$, with the policy, prompts, controller, and seeds unchanged.
+The near-mirror pairing shows that the measured gap belongs to the policy--layout pair, not to the checkpoint alone.
+Matched reference inversion exposes a second limit: describing the same physical goals from the other object's frame collapses $\pi_{0.5}$ endpoint separation from $23.28$\,cm to $0.19$\,cm.
+A binary gap can also conceal placement change: in Nano's matched 27-seed symmetric-scene core, the binary interaction is exactly zero ($p=1$) alongside a $-13.9$\,cm requested-side-depth interaction.
+A powered $\pi_{0.5}$ residual remains and fails the prespecified equivalence criteria; the symmetric-scene control therefore neither removes every disparity nor localizes the residual to the policy.
+Together, these results show why neither a large nor a small completion gap identifies directional grounding without matched tests of wording and layout.
 We recommend reporting prompt-conditioned action response, signed endpoint ordering, requested-side depth, and frozen task completion separately, together with matched language and scene controls.
 \end{abstract}
 
