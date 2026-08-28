@@ -214,25 +214,24 @@ We issue the instruction once at reset and leave it alone: no oracle actions, no
 DROID/RoboLab pairs the DROID Franka embodiment~\cite{khazatsky2024droid} with the RoboLab Isaac Sim environment~\cite{nvlabs2026robolab} and uses a Rubik's cube and bowl; RoboTwin~\cite{mu2025robotwin} uses a wooden block and playing-card box.
 Both require placement and release in the requested relational region.
 
-\tightparagraph{Checkpoints and pre-intervention screen.}
-Table~\ref{tab:corpus} lists the eight expanded Phase-A rows; App.~\ref{app:provenance} records the available artifact identifier and revision behind each one.
+\tightparagraph{Checkpoints and evaluation scope.}
+Table~\ref{tab:corpus} lists the eight checkpoint--arena combinations in the descriptive matched-pair evaluation; App.~\ref{app:provenance} records the available release identifier and revision for each checkpoint.
 Two are action-only VLAs and six are world-action models (WAM), which predict future observations alongside actions.
 Within each arena, checkpoints use its fixed action interface and frozen predicate.
-Edge and Nano are the 4B and 16B policies of one Cosmos3 family~\cite{nvidia2026cosmos3}, so the rows are not fully independent.
+Edge and Nano are the 4B and 16B policies of one Cosmos3 family~\cite{nvidia2026cosmos3}, so they are not independent model families.
 The checkpoints come from different developers with different pretraining mixtures and post-training recipes; exact training-episode membership, caption exposure, and sampling weights are undisclosed.
-Every causal contrast is therefore within checkpoint.
-Cross-row differences provide context only; no comparison across rows is load-bearing.
+Every causal contrast is therefore within checkpoint; results from different checkpoints provide context only, and we do not rank checkpoints.
 
-We define the pre-intervention screen as one completed matched-pair row per checkpoint and arena.
-Repository evidence spans eleven checkpoint identities.
-Of these, the Phase-A screen reported here comprises eight checkpoint--arena rows: five DROID/RoboLab rows at 27 matched pairs each and three RoboTwin rows at 63 matched pairs each, for 324 pairs or 648 episodes.
-The remaining identities appear only in separate cohorts: a 20-pair $\pi_0$-FAST compatibility bridge and two bounded three-pair RoboTwin gates, LingBot-VLA 4B (distinct from the screened LingBot-VA checkpoint) and Light-WAM.
-Because those cohorts use different designs and denominators, we do not pool them into the Phase-A screen.
-The two arenas use different tasks and different success tests, so no outcome estimate or effect pools arenas; totals across rows are bookkeeping only, and the larger intervention cohorts state their own denominators.
+We report one completed matched-pair evaluation for each checkpoint--arena combination in Table~\ref{tab:corpus}.
+Results are available for eleven distinct checkpoints.
+Eight appear in the descriptive evaluation: five DROID/RoboLab checkpoints evaluated on 27 matched pairs each and three RoboTwin checkpoints evaluated on 63 matched pairs each, for 324 pairs or 648 episodes.
+The other three appear only in smaller evaluations with different designs and denominators: a 20-pair evaluation of $\pi_0$-FAST and two three-pair RoboTwin evaluations, one of LingBot-VLA 4B (distinct from LingBot-VA in Table~\ref{tab:corpus}) and one of Light-WAM.
+We therefore do not combine them with the eight checkpoint--arena results.
+The two arenas use different tasks and different success tests, so no outcome estimate or effect pools arenas; totals across checkpoint--arena combinations describe evaluation scale only, and the larger intervention experiments state their own denominators.
 
 \begin{table}[t]
   \centering
-  \caption{Expanded Phase-A checkpoint--arena rows in the pre-intervention screen; short names in parentheses.}
+  \caption{Checkpoint--arena combinations and matched-pair counts in the descriptive evaluation; short names in parentheses.}
   \label{tab:corpus}
   \small
   \begin{tabular}{@{}lcr@{}}
@@ -283,8 +282,8 @@ We run 341 resets for the $\pi_{0.5}$ study in one symmetric DROID/RoboLab scene
 \tightparagraph{Geometry interventions.}
 Reflection is a pure world-space object-position intervention fixed in advance: it mirrors the centers of all movable objects about the robot sagittal plane without mirroring observations or un-mirroring actions.
 The robot, cameras, fixed scene geometry, prompts, seeds, and controller remain unchanged.
-We pair it with two further interventions fixed in advance: a seven-level sweep that moves only the reference object laterally and a symmetric-scene cohort that drives a registered movable-object asymmetry metric to zero (App.~\ref{app:symmetry_metric}).
-The symmetric package also changes which other objects are present, so it is not a position-only intervention and does not imply bilateral embodiment symmetry.
+We pair it with two further interventions fixed in advance: a seven-level sweep that moves only the reference object laterally and a symmetric-scene cohort that drives a prespecified movable-object asymmetry metric to zero (App.~\ref{app:symmetry_metric}).
+The symmetric layout also changes which other objects are present, so it is not a position-only intervention and does not imply bilateral embodiment symmetry.
 We interpret scene effects only for rows that pass the prespecified endpoint-redirection positive control, which asks whether the policy still moves its endpoint in the commanded direction.
 We report failed rows without a geometry interpretation.
 
@@ -295,10 +294,10 @@ Every behavioral failure stays in its denominator.
 Marginal binary rates use Wilson intervals, paired continuous contrasts use seed-clustered percentile bootstraps with 20,000 resamples and exact sign tests, and layout interactions use exact within-seed label permutations.
 Absence claims require two one-sided equivalence tests (TOST) against prespecified margins, rather than nonsignificance~\cite{wilson1927interval,efron1994bootstrap,schuirmann1987tost}.
 Prompts, seeds, success tests, target quantities, margins, and the failure-label order are all fixed before the runs they affect.
-The public archive\footnote{\url{https://github.com/adeeb10abbas/steerable}} records the available manifests, seeds, checkpoint revisions, and freeze times for the reported cohorts.
+The public archive\footnote{\url{https://github.com/adeeb10abbas/steerable}} records the available seeds, checkpoint revisions, and timestamps showing when each reported design was fixed.
 
 \tightparagraph{Every base-frame pair changes the executed action, and most redirect the endpoint correctly:}
-All 324 minimal pairs across the eight screen rows execute different action sequences: 135 DROID/RoboLab pairs and 189 RoboTwin pairs.
+All 324 minimal pairs across the eight checkpoint--arena combinations in Table~\ref{tab:corpus} execute different action sequences: 135 DROID/RoboLab pairs and 189 RoboTwin pairs.
 Endpoint ordering is positive in $125/135$ and $128/189$ pairs, respectively.
 These differences serve as the matched trace-difference positive control; they do not show that the policy represents the relation independently of its wording or guarantee task completion.
 
@@ -316,9 +315,9 @@ These action-only responses are a positive control, not a standalone grounding s
 The paired outcomes are nearly mirrored: control \tokR{} and reflected \tokL{} each succeed in $25/27$ trials, whereas control \tokL{} and reflected \tokR{} succeed in $4/27$ and $9/27$.
 The latter five-success difference is the part that reflection does not remove.
 
-The eight-row Phase-A screen is descriptive context (Fig.~\ref{fig:screening}).
+The eight checkpoint--arena results provide descriptive context (Fig.~\ref{fig:screening}).
 $\pi_{0.5}$ and DreamZero favor \tokR{}, Nano is near ceiling, and GR00T completes only $3/27$ \tokL{} and $0/27$ \tokR{} trials; $49/54$ GR00T episodes fail at pickup.
-The RoboTwin screening gaps are descriptively small.
+The three RoboTwin evaluations show small observed directional gaps.
 Two checkpoints later fail the endpoint-redirection positive control, so those rows do not test layout dependence.
 
 \begin{figure*}[t]
@@ -327,14 +326,14 @@ Two checkpoints later fail the endpoint-redirection positive control, so those r
   \caption{\textbf{Directional task success varies across the eight checkpoint--arena rows.}
   Points show marginal \tokL{} and \tokR{} success with 95\% Wilson intervals.
   DROID/RoboLab uses 27 matched pairs per row and RoboTwin 63; their tasks and frozen predicates differ.
-  The screen is descriptive, and every causal comparison in this paper is within checkpoint; the figure does not support cross-model or cross-arena ranking.}
+  These results are descriptive, and every causal comparison in this paper is within checkpoint; the figure does not support cross-model or cross-arena ranking.}
   \label{fig:screening}
 \end{figure*}
 
 \subsection{Pure object-position reflection}
 
 We reflect the movable-object centers about the sagittal plane (Sec.~\ref{sec:method}) and evaluate four conditions per checkpoint (two directions by two layouts) over 27 seeds, or 108 episodes for each of three DROID/RoboLab checkpoints.
-The $\pi_{0.5}$ reflection cohort uses seeds disjoint from the screen.
+The $\pi_{0.5}$ reflection cohort uses seeds disjoint from those used in the descriptive evaluation.
 Figure~\ref{fig:screening} therefore reports $5/27$ and $24/27$, whereas the control condition below has $4/27$ and $25/27$.
 The primary outcome is the within-seed layout interaction in requested-side depth; success is secondary because binary outcomes can saturate by layout and direction.
 Nano, the checkpoint closest to the binary ceiling, illustrates why in Fig.~\ref{fig:reflection_scene}.
@@ -379,9 +378,9 @@ Section~\ref{sec:limitations} states the experiment needed to separate them.
 
 \tightparagraph{The dependence is graded across the seven tested positions:}
 We move the bowl across seven lateral positions while retaining the same Nano checkpoint and 15 matched seeds per level (210 episodes).
-Across all seven registered positions, the requested-depth contrast has a slope of $1.12$ cm of depth per cm of reference displacement (95\% CI $[0.72,1.56]$); 13 of 15 seed-level slopes are positive (exact $p=.00739$).
+Across all seven prespecified positions, the requested-depth contrast has a slope of $1.12$ cm of depth per cm of reference displacement (95\% CI $[0.72,1.56]$); 13 of 15 seed-level slopes are positive (exact $p=.00739$).
 A post hoc analysis of the middle five positions gives a weaker slope: $0.49$ (95\% CI $[-0.04,0.97]$), with 11 of 15 positive slopes ($p=.118$).
-We therefore limit the graded-dependence claim to the full registered range.
+We therefore limit the graded-dependence claim to the full prespecified range.
 The middle-five analysis does not support an interior linear law.
 The fitted zero crossing lies outside the positions we tested, so we cannot locate a balanced interior layout from these data.
 
@@ -391,17 +390,17 @@ The fitted zero crossing lies outside the positions we tested, so we cannot loca
   \includegraphics[width=0.98\textwidth]{figures/symmetry_core.pdf}
   \caption{\textbf{Two scene interventions, measured continuously and binarily.}
   Top: for Nano, the directional placement contrast across the seven-position reference-object sweep, with mean \tokR{}-minus-\tokL{} requested-side depth and seed-clustered 95\% intervals on the left and frozen task success by requested direction on the right; each position contains 15 matched seeds.
-  Bottom: symmetric-minus-control interactions in the matched 27-seed core of the positive-control-passing DROID/RoboLab cohort, with seed-clustered 95\% intervals; requested-depth disparity decreases in every checkpoint.
+  Bottom: symmetric-minus-control interactions for the 27 matched seeds shared across layouts within each DROID/RoboLab checkpoint that passes the endpoint-redirection control, with seed-clustered 95\% intervals; requested-depth disparity decreases in every checkpoint.
   In both interventions the continuous measure exposes variation that binary success compresses near ceiling, as for Nano.
   Every comparison is within checkpoint; the panels do not support cross-model ranking.}
   \label{fig:scene}
 \end{figure*}
 
-\tightparagraph{Three registered Nano interventions change directional placement or completion:}
+\tightparagraph{Three prespecified Nano interventions change directional placement or completion:}
 The seven-position sweep shows why binary success alone is a weak diagnostic: \tokL{} completion changes from $15/15$ to $10/15$, while \tokR{} stays close to ceiling (Fig.~\ref{fig:scene}).
-Separate registered Nano cohorts support the same layout-dependence claim without being pooled with reflection.
+Separate Nano cohorts support the same layout-dependence claim without being pooled with reflection.
 For Nano, the \tokR{}-minus-\tokL{} success gap changes from $(22-26)/27=-4/27$ when the target starts robot-left of the reference to $(27-23)/27=+4/27$ when it starts robot-right.
-Under the registered right-start-minus-left-start convention, the interaction is therefore $+8/27=+0.296$ ($p=.0156$).
+Under the prespecified right-start-minus-left-start convention, the interaction is therefore $+8/27=+0.296$ ($p=.0156$).
 Also for Nano, swapping target and reference roles changes the depth contrast by $+13$\,cm (95\% CI $[6,21]$, $p=.00151$).
 The role swap keeps the direction word and relation template fixed, but changes the manipulandum and physical goal.
 Reference inversion instead keeps both fixed and changes the linguistic frame.
@@ -458,8 +457,8 @@ Base-frame response is therefore insufficient evidence that a physical relation 
 Nano's completion interaction is zero ($p=1$), whereas requested-side depth shifts by $-13.9$\,cm ($p=1.8\times10^{-4}$).
 
 The symmetric-scene cohort contains 4,096 episodes (2,048 matched pairs) across five checkpoint--arena rows.
-The dense rows contribute 763 $\pi_{0.5}$ pairs and 1,123 Nano pairs; Edge, DreamZero, and FastWAM contribute 54 each.
-The intervention zeros the registered movable-object asymmetry metric but replaces a scene package rather than changing positions alone.
+The two larger cohorts contain 763 $\pi_{0.5}$ pairs and 1,123 Nano pairs; Edge, DreamZero, and FastWAM contribute 54 each.
+The intervention sets the prespecified movable-object asymmetry metric to zero but also changes which other objects are present, so it is not a position-only change.
 Four DROID/RoboLab checkpoints pass the endpoint-redirection control and support a scene-effect interpretation.
 FastWAM and the separate 108-episode LingBot-VA cohort fail it; we report both without a geometry interpretation.
 GR00T is excluded because it almost never completes.
@@ -471,7 +470,7 @@ At the symmetric endpoint, the paired 90\% interval for the binary gap is $[15.0
 The requested-depth interval is $[4.85,6.66]$\,cm against $\pm4.15$\,cm.
 Neither meets its equivalence criterion.
 The prespecified power analysis at $n=341$ gives an 80\%-power minimum detectable effect of 7.8 percentage points for the binary gap, relative to the 15.56-point equivalence margin.
-We also analyze a separately registered matched core of 27 seeds shared across layouts.
+We also analyze a prespecified subset of 27 seeds shared across layouts.
 Its binary and requested-depth interactions are $-51.9$ points (95\% CI $[-81.5,-22.2]$, $p=.00786$) and $-12.4$\,cm (95\% CI $[-19.7,-4.9]$, $p=.00348$), respectively.
 Base-frame redirection at the symmetric endpoint is $+23.9$\,cm, with $335/341$ positive pairs.
 
@@ -481,7 +480,7 @@ DreamZero's observed binary gap changes from $+51.9$ to $-3.7$ points (interacti
 Edge's $-14.8$-point binary interaction is inconclusive: its 95\% interval $[-40.7,+7.4]$ includes zero.
 Its depth interaction is $-19.2$\,cm (95\% CI $[-26.0,-11.5]$).
 
-Appendix~\ref{app:failure_labels} reports the descriptive failure-label bookkeeping for the full $\pi_{0.5}$ endpoint cohorts.
+Appendix~\ref{app:failure_labels} reports descriptive failure counts for the full $\pi_{0.5}$ endpoint cohorts.
 
 % =============================================================================
 % VII. DISCUSSION
@@ -524,7 +523,7 @@ A published directional gap measured without that control may therefore reflect 
 
 Our design trades external validity for control.
 Exact state matching needs a resettable simulator, so hardware contact uncertainty and natural variation in human instructions remain untested.
-We interpret object-layout effects only for the DROID/RoboLab rows that pass the endpoint-redirection control; the RoboTwin rows screen behavior, not a cross-arena replication or refutation.
+We interpret object-layout effects only for the DROID/RoboLab checkpoints that pass the endpoint-redirection control; the RoboTwin evaluations describe behavior and do not constitute a cross-arena replication or refutation.
 The task family is narrow as well: two named objects, one lateral relation, and one reference inversion on one $\pi_{0.5}$ checkpoint.
 DreamZero's public demonstrations include lateral placements relative to a bowl, so this task may be closer to its demonstrated set than the other rows'.
 
@@ -561,7 +560,7 @@ Directional grounding therefore requires controls that separate language respons
 \section{Symmetric-Scene Asymmetry Metric}
 \label{app:symmetry_metric}
 
-The registered metric is the root-sum-square departure of the movable objects from bilateral symmetry about the robot midline.
+The prespecified metric is the root-sum-square departure of the movable objects from bilateral symmetry about the robot midline.
 It measures midline objects from the midline itself and mirror-paired objects from each other's reflection, with position weighted at 10 per metre and orientation at 1 per radian.
 The control layout scores 3.85 and the symmetric layout 0.00, within prespecified millimetre and half-degree tolerances.
 The robot, cameras, wrist mounting, reset posture, prompts, seeds, and controller are unchanged across the two scenes, but the companion-object inventory changes; the metric therefore certifies movable-object symmetry rather than full-scene or embodiment symmetry.
@@ -586,7 +585,7 @@ No returned action in this diagnostic is executed, so these results support an a
 \label{app:failure_labels}
 
 The full $\pi_{0.5}$ endpoint cohorts pool directions within 682 episodes per layout.
-These unpaired totals are descriptive bookkeeping, not a separate interaction test.
+These unpaired totals are descriptive summaries, not a separate interaction test.
 \begin{center}
   \centering
   \scriptsize
@@ -640,6 +639,6 @@ They do not expose training-episode membership, sampling weights, or configurati
   \end{tabular}
 \end{center}
 
-The $\pi_{0.5}$ row is an internal release rather than a public repository revision, so its recorded identifier is a manifest digest, abbreviated here and given in full in the released manifest. LingBot-VA is evaluated as a base checkpoint plus a RoboTwin post-training checkpoint, so both revisions are required to reproduce it.
+The $\pi_{0.5}$ row uses a nonpublic checkpoint release rather than a public repository revision, so its recorded identifier is a manifest digest, abbreviated here and given in full in the released manifest. LingBot-VA is evaluated as a base checkpoint plus a RoboTwin post-training checkpoint, so both revisions are required to reproduce it.
 
 \end{document}
