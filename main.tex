@@ -1,6 +1,6 @@
 % !TEX program = pdflatex
 % =============================================================================
-% Directional Success Depends on Layout in Language-Conditioned Manipulation
+% Move the Objects, Move the Score: What Directional Success Gaps Measure in Language-Conditioned Manipulation
 %
 % Single-file source. Only references.bib and figures/ are external.
 % Section order: Introduction, Related Work, Experimental Design, Reflection,
@@ -79,8 +79,8 @@ Ali-Adeeb Abbas$^{1,2}$, Esmaeil Seraj$^{2}$, Behrad Toghi$^{2}$ and Taskin Padi
 \setlength{\dbltextfloatsep}{10pt plus 2pt minus 2pt}
 \setlength{\dblfloatsep}{10pt plus 2pt minus 2pt}
 
-\title{Directional Success Depends on Layout in Language-Conditioned Manipulation}
-\hypersetup{pdftitle={Directional Success Depends on Layout in Language-Conditioned Manipulation}}
+\title{Move the Objects, Move the Score: What Directional Success Gaps Measure in Language-Conditioned Manipulation}
+\hypersetup{pdftitle={Move the Objects, Move the Score: What Directional Success Gaps Measure in Language-Conditioned Manipulation}}
 \author{%
 \ifanonymous
 Anonymous Authors%
@@ -274,12 +274,15 @@ The scorer, and the sign of $M$ for this control, follow the physical goal rathe
 We run 341 resets for the $\pi_{0.5}$ study in one symmetric DROID/RoboLab scene, with both forms of both physical goals sharing reset and sampling state, for 1,364 episodes on seeds disjoint from every scene-intervention cohort.
 
 \tightparagraph{Geometry interventions.}
-Reflection is a pure world-space object-position intervention fixed in advance: it mirrors the centers of all movable objects about the robot sagittal plane without mirroring observations or un-mirroring actions.
+Reflection is a pure world-space object-position intervention: it mirrors the centers of all movable objects about the robot sagittal plane without mirroring observations or un-mirroring actions.
 The robot, cameras, fixed scene geometry, prompts, seeds, and controller remain unchanged.
-We pair it with two further interventions fixed in advance: a seven-level sweep that moves only the reference object laterally and a symmetric-scene cohort that drives a prespecified movable-object asymmetry metric to zero (App.~\ref{app:symmetry_metric}).
-The symmetric layout also changes which other objects are present, so it is not a position-only intervention and does not imply bilateral embodiment symmetry.
-We interpret scene effects only for rows that pass the prespecified endpoint-redirection positive control, which asks whether the policy still moves its endpoint in the commanded direction.
-We report failed rows without a geometry interpretation.
+We pair it with two further interventions: a seven-level sweep that moves only the reference object laterally, and a symmetric-scene cohort that drives a prespecified movable-object asymmetry metric to zero (App.~\ref{app:symmetry_metric}).
+The symmetric layout also changes which other objects are present, so it is not a position-only intervention.
+All three interventions were fixed before the runs they affect.
+
+We interpret scene effects only where the policy still moves its endpoint in the commanded direction.
+If a policy does not respond to the direction word, its two conditions are not a meaningful contrast, and a smaller gap under intervention says nothing about the scene.
+We report the checkpoints that fail this control and draw no geometry conclusion from them.
 
 \tightparagraph{Scoring and inference.}
 We do not relax the original task predicate.
