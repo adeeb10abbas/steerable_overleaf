@@ -1,6 +1,6 @@
 % !TEX program = pdflatex
 % =============================================================================
-% Examining Directional Success Gaps in Language-Conditioned Manipulation
+% Directional Success Depends on Layout in Language-Conditioned Manipulation
 %
 % Single-file source. Only references.bib and figures/ are external.
 % Section order: Introduction, Related Work, Experimental Design, Reflection,
@@ -79,7 +79,8 @@ Ali-Adeeb Abbas$^{1,2}$, Esmaeil Seraj$^{2}$, Behrad Toghi$^{2}$ and Taskin Padi
 \setlength{\dbltextfloatsep}{10pt plus 2pt minus 2pt}
 \setlength{\dblfloatsep}{10pt plus 2pt minus 2pt}
 
-\title{Examining Directional Success Gaps in Language-Conditioned Manipulation}
+\title{Directional Success Depends on Layout in Language-Conditioned Manipulation}
+\hypersetup{pdftitle={Directional Success Depends on Layout in Language-Conditioned Manipulation}}
 \author{%
 \ifanonymous
 Anonymous Authors%
@@ -98,12 +99,11 @@ Anonymous Authors%
 Language-conditioned manipulation has seen rapid progress, with generalist policies now following relational commands such as placing an object to the left or right of another.
 Directional success gaps between opposite commands have become a common way to assess whether these policies ground language, but such comparisons conflate several distinct questions, limiting a nuanced understanding of current capabilities.
 
-In this paper, we test what a directional success gap measures.
-We separate the comparison into executed-action response, endpoint ordering, requested-side depth, and task completion.
-We then apply matched interventions in a controlled setting, holding the checkpoint, controller, and seeds fixed while changing either the object layout or the linguistic reference frame.
+In this paper, we examine in detail what a directional success gap measures.
+We propose and validate a decomposition of the score into the stages it conflates, and we apply matched interventions in a controlled setting, holding the checkpoint, controller, and seeds fixed while changing either the object layout or the linguistic reference frame.
 We evaluate released checkpoints across two simulators with prespecified outcomes and equivalence tests.
-We find that matched layout interventions change the requested-side-depth contrast in every checkpoint that passes the prespecified endpoint-redirection control, and that layout alone can reverse which direction completes more often under an unchanged predicate.
-Moreover, in the reference-inversion cohort, restating the same physical goals from the other object's reference frame collapses the endpoint separation that familiar wording produces.
+We find that scene layout changes the directional contrast in every checkpoint tested, and that where a policy sits near the success threshold, layout alone changes which direction completes under an unchanged predicate.
+Moreover, restating the same physical goals from the other object's reference frame collapses the endpoint separation that familiar wording produces.
 These results show that directional success reflects both scene geometry and linguistic form, and that neither a large nor a small gap identifies grounding on its own.
 Project page: \url{https://github.com/adeeb10abbas/steerable}
 \end{abstract}
@@ -140,15 +140,11 @@ Scene dependence is not the only threat to interpretation.
 When the same physical goals are expressed from the other object's reference frame---``cube left of bowl'' becomes ``bowl right of cube,'' and conversely---the familiar base-frame endpoint separation nearly vanishes.
 Base-frame sensitivity to \tokL{} and \tokR{} therefore does not establish that the underlying relation transfers across linguistic frames.
 
-The controls change what a directional score can support.
-A large gap can be a false grounding failure when one layout makes one requested placement harder to complete; a reassuring base-frame response can be a false pass when it does not survive the tested equivalent expression of the relation.
-Reflection exposes the first error, reference inversion exposes the second, and the endpoint decomposition makes both visible.
-
 We make three contributions, ordered by the claims they support:
 \begin{itemize}
-    \item \textbf{A matched object-layout intervention.} Moving only the movable objects, with the checkpoint, prompts, controller, and seeds unchanged, reverses which direction completes more often. Graded displacement and symmetric-scene controls show the same dependence in continuous placement.
+    \item \textbf{A matched object-layout intervention.} Mirroring the positions of the movable objects, with the robot, cameras, prompts, controller, and seeds unchanged, reverses which direction completes more often. Graded displacement and symmetric-scene controls show the same dependence in continuous placement.
     \item \textbf{A reference-inversion control for relation-level transfer.} Holding each physical goal and the manipulated object fixed while restating the relation from the other object's frame removes the endpoint separation that the familiar wording produces.
-    \item \textbf{A decomposition that separates redirection from completion.} Executed-action response, signed endpoint ordering, requested-side depth, and frozen task completion locate where a directional contrast changes, and expose layout-dependent placement even where binary success sits at ceiling.
+    \item \textbf{A decomposition that separates redirection from completion.} We measure whether the command changed the executed actions, whether it moved the endpoint toward the requested side, how far along that side the object came to rest, and whether the task predicate was satisfied. Together these locate where a directional contrast changes, and expose layout-dependent placement even where completion sits at ceiling.
 \end{itemize}
 None requires retraining, new hardware, or a change to the frozen success predicate.
 
@@ -156,7 +152,7 @@ None requires retraining, new hardware, or a change to the frozen success predic
   \centering
   \includegraphics[width=0.98\textwidth]{figures/reflection_core.pdf}
   \caption{\textbf{Reflection changes continuous placement and reverses $\pi_{0.5}$ completion.}
-  Left: reflected-minus-control interaction in requested-side depth, with seed-clustered 95\% bootstrap intervals; fractions give seeds with a negative interaction.
+  Left: reflected-minus-control interaction in how far the object comes to rest along the requested direction, with seed-clustered 95\% bootstrap intervals; fractions give seeds with a negative interaction.
   Right: the $\pi_{0.5}$ completion advantage reverses after reflection; plotted fractions give the success counts.
   All causal comparisons are within checkpoint; the panels do not support cross-model ranking.}
   \label{fig:reflection}
@@ -192,8 +188,8 @@ The exact pairing requires a resettable simulator, but it prevents scene and sam
 \tightparagraph{Evaluation practice.}
 Grounding spatial and directional language into executable behavior long predates VLAs, and early systems already separated the referring expression, the spatial relation, and the executed path~\cite{kollar2010directions,tellex2011understanding}.
 Recent large-scale evaluations, including the TRI study of Large Behavior Models, strengthen manipulation comparisons through controlled initial conditions, randomized trials, and statistical confidence~\cite{trilbm2025careful}.
-That work makes comparisons between success rates more trustworthy.
-We ask what a directional success gap identifies: whether, under a frozen predicate, it can isolate language as the source of failure when the same gap also responds to where the objects sit.
+That work makes a success rate more trustworthy.
+We ask what a success rate identifies: whether a directional gap measured under a frozen predicate can attribute a failure to language, given that the same gap responds to where the objects sit.
 
 % =============================================================================
 % III. EXPERIMENTAL DESIGN
@@ -262,7 +258,7 @@ S_i^d &= \mathbb{1}[\text{frozen task predicate is satisfied for }d],\\
 M_i^L &= y_i^L,\qquad M_i^R = -y_i^R.
 \end{align}
 $A_i$ uses bitwise inequality on the complete common executed prefix.
-Positive $D_i$ means the requested endpoint ordering: within a pair the object came to rest further leftward under \tokL{} than under \tokR{}.
+Positive $D_i$ means that the endpoints have the requested directional ordering: within a pair the object came to rest further leftward under \tokL{} than under \tokR{}.
 $S_i^d$ is task completion, and requested-side depth $M_i^d$ records where the target comes to rest along the requested physical direction.
 
 \tightparagraph{Calibrating $A_i$ against sampling noise.}
@@ -296,7 +292,7 @@ The public archive\footnote{\url{https://github.com/adeeb10abbas/steerable}} rec
 
 \tightparagraph{Every base-frame pair changes the executed action, and most redirect the endpoint correctly:}
 All 324 minimal pairs across the eight checkpoint--arena combinations in Table~\ref{tab:corpus} execute different action sequences: 135 DROID/RoboLab pairs and 189 RoboTwin pairs.
-Endpoint ordering is positive in $125/135$ and $128/189$ pairs, respectively.
+Directional ordering is positive in $125/135$ and $128/189$ pairs, respectively.
 These differences serve as the matched trace-difference positive control; they do not show that the policy represents the relation independently of its wording or guarantee task completion.
 
 \tightparagraph{Open-loop action response is not a standalone grounding score:}
