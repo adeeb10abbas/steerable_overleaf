@@ -194,7 +194,8 @@ The exact pairing requires a resettable simulator, but it prevents scene and sam
 \tightparagraph{Evaluation practice.}
 Grounding spatial and directional language into executable behavior long predates VLAs, and early systems already separated the referring expression, the spatial relation, and the executed path~\cite{kollar2010directions,tellex2011understanding}.
 Recent large-scale evaluations, including the TRI study of Large Behavior Models, strengthen manipulation comparisons through controlled initial conditions, randomized trials, and statistical confidence~\cite{trilbm2025careful}.
-We share that emphasis on controlled evaluation but ask a different question: what changes between two relational commands at the same reset and sampling seed?
+That work makes comparisons between success rates more trustworthy.
+We ask what a directional success gap identifies: whether, under a frozen predicate, it can isolate language as the source of failure when the same gap also responds to where the objects sit.
 
 % =============================================================================
 % III. EXPERIMENTAL DESIGN
@@ -204,7 +205,6 @@ We share that emphasis on controlled evaluation but ask a different question: wh
 
 We layer two controls on the same base-frame prompt pair.
 Reference inversion changes the linguistic frame while holding each physical goal fixed; the scene interventions change object geometry while preserving the prompt pair.
-Together they test whether the directional score survives changes in linguistic formulation and scene geometry.
 
 \tightparagraph{Minimal-pair token intervention.}
 Literal prompt tokens appear in small capitals, \tokL{} and \tokR{}, while \emph{leftward} and \emph{rightward} denote physical directions in robot coordinates; a policy can track the token without preserving the direction it denotes.
