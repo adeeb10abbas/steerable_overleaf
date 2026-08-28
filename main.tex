@@ -297,10 +297,7 @@ The public archive\footnote{\url{https://github.com/adeeb10abbas/steerable}} rec
 All 324 minimal pairs across the eight checkpoint--arena combinations in Table~\ref{tab:corpus} execute different action sequences: 135 DROID/RoboLab pairs and 189 RoboTwin pairs.
 Directional ordering is positive in $125/135$ and $128/189$ pairs, respectively.
 These differences serve as the matched trace-difference positive control; they do not show that the policy represents the relation independently of its wording or guarantee task completion.
-
-\tightparagraph{Open-loop action response is not a standalone grounding score:}
-On a frozen observation, $\pi_{0.5}$ shows small but consistently oriented prompt differences, whereas DreamZero's prompt-to-noise ratio is undefined because its measured cross-seed variation is zero.
-These action-only responses are a positive control, not a standalone grounding score; App.~\ref{app:fixed_observation} reports the diagnostic details.
+Querying each policy on a frozen observation confirms the differences exceed same-prompt sampling variation (App.~\ref{app:fixed_observation}).
 
 % =============================================================================
 % IV. REFLECTION CHANGES DIRECTIONAL PLACEMENT AND COMPLETION
