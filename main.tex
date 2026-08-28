@@ -97,15 +97,13 @@ Anonymous Authors%
 % ABSTRACT
 % =============================================================================
 \begin{abstract}
-Opposite spatial commands are often compared with a binary success gap and interpreted as evidence of language grounding.
+Opposite spatial commands are often compared with a binary success gap and read as evidence about language grounding.
 That score also depends on the scene in which the command is executed.
-We audit this attribution with matched interventions that keep the checkpoint, controller, and seeds fixed while changing either object layout or linguistic reference frame.
-Mirroring only the movable-object centers reverses $\pi_{0.5}$ completion: $4/27$ \tokL{} and $25/27$ \tokR{} become $25/27$ \tokL{} and $9/27$ \tokR{}.
-The unchanged checkpoint therefore favors opposite directions in two layouts.
-For the same checkpoint, reference inversion on matched physical goals collapses endpoint separation from $23.28$\,cm to $0.19$\,cm.
-Nano's completion interaction is zero, yet matched requested-side depth shifts by $-13.9$\,cm.
-A $20.2$-percentage-point $\pi_{0.5}$ gap remains in the symmetric scene and does not meet the prespecified equivalence criterion.
-The control changes the gap without identifying its cause.
+We audit this attribution across released checkpoints in two simulators, using matched interventions that hold the checkpoint, controller, and seeds fixed while changing either the object layout or the linguistic reference frame.
+Mirroring only the movable-object centers shifts the requested-side-depth contrast in the same direction in every checkpoint tested, and in $\pi_{0.5}$ it reverses which direction completes under the unchanged success predicate.
+Making the movable-object geometry symmetric reduces the requested-side-depth disparity in every checkpoint that still redirects on command, though a $\pi_{0.5}$ binary gap remains and does not meet the prespecified equivalence criterion.
+Restating the same physical goals from the other object's reference frame collapses the endpoint separation that the familiar wording produces.
+And a binary completion interaction can be exactly zero while matched requested-side depth decreases substantially.
 Directional success is therefore a property of the policy--layout pair and cannot, by itself, isolate language grounding.
 \end{abstract}
 
