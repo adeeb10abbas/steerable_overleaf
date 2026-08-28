@@ -300,14 +300,19 @@ On a frozen observation, $\pi_{0.5}$ shows small but consistently oriented promp
 These action-only responses are a positive control, not a standalone grounding score; App.~\ref{app:fixed_observation} reports the diagnostic details.
 
 % =============================================================================
-% IV. REFLECTION REVERSES DIRECTIONAL COMPLETION
+% IV. REFLECTION CHANGES DIRECTIONAL PLACEMENT AND COMPLETION
 % =============================================================================
-\section{Reflection Reverses Directional Completion}
+\section{Reflection Changes Directional Placement and Completion}
 \label{sec:reflection}
 
-\tightparagraph{Reflection reverses which direction $\pi_{0.5}$ completes:}
-The paired outcomes are nearly mirrored: control \tokR{} and reflected \tokL{} each succeed in $25/27$ trials, whereas control \tokL{} and reflected \tokR{} succeed in $4/27$ and $9/27$.
-The latter five-success difference is the part that reflection does not remove.
+\tightparagraph{Reflection shifts the requested-side-depth contrast in the same direction in all three tested checkpoints:}
+The reflected-minus-control interaction is negative in every reflection checkpoint (Fig.~\ref{fig:reflection}).
+The interaction is $-34.6$\,cm for $\pi_{0.5}$ (95\% CI $[-41.4,-28.5]$; $27/27$ seeds; $p=1.49\times10^{-8}$).
+It is $-24.8$\,cm for Nano ($[-32.4,-17.3]$; $24/27$; $p=4.92\times10^{-5}$) and $-14.1$\,cm for DreamZero ($[-19.9,-8.2]$; $23/27$; $p=3.11\times10^{-4}$).
+
+\tightparagraph{In $\pi_{0.5}$ the shift crosses the success predicate and reverses which direction completes:}
+Control \tokR{} and reflected \tokL{} each succeed in $25/27$ trials, whereas control \tokL{} and reflected \tokR{} succeed in $4/27$ and $9/27$.
+The five-success difference is the part that reflection does not remove.
 
 The eight checkpoint--arena results provide descriptive context (Fig.~\ref{fig:screening}).
 $\pi_{0.5}$ and DreamZero favor \tokR{}, Nano is near ceiling, and GR00T completes only $3/27$ \tokL{} and $0/27$ \tokR{} trials; $49/54$ GR00T episodes fail at pickup.
@@ -337,18 +342,13 @@ Nano, the checkpoint closest to the binary ceiling, illustrates why in Fig.~\ref
   \includegraphics[width=0.98\textwidth]{figures/reflection_scene.pdf}
   \caption{\textbf{Reflecting movable-object positions moves the placement while the binary score stays at ceiling (Nano, 108 episodes).}
   (a) Final lateral cube position for every seed in the four conditions; bars mark their means and titles give task completion.
-  The prompts still separate after reflection, by $45.3$\,cm against $44.8$\,cm in the control layout, but both distributions shift by about $12$\,cm, producing the requested-side-depth interaction reported below.
+  The prompts still separate after reflection, by $45.3$\,cm against $44.8$\,cm in the control layout, but both distributions shift by about $12$\,cm, producing the requested-side-depth interaction reported in this section.
   Completion moves only from $52/54$ to $50/54$.
   (b) The executed rollout for the lowest released seed in each condition, sampled at that episode's logged events, with ticks marking the frozen predicate and numbers repeating the final signed offset.
   Robot-left appears toward the image right in this viewport, so the signed values rather than the images fix direction.
   Rollouts were selected by lowest released seed before any outcome was read.}
   \label{fig:reflection_scene}
 \end{figure*}
-
-\tightparagraph{Reflection shifts the requested-side-depth contrast in the same direction in all three tested checkpoints:}
-The reflected-minus-control interaction is negative in every reflection checkpoint (Fig.~\ref{fig:reflection}).
-The interaction is $-34.6$\,cm for $\pi_{0.5}$ (95\% CI $[-41.4,-28.5]$; $27/27$ seeds; $p=1.49\times10^{-8}$).
-It is $-24.8$\,cm for Nano ($[-32.4,-17.3]$; $24/27$; $p=4.92\times10^{-5}$) and $-14.1$\,cm for DreamZero ($[-19.9,-8.2]$; $23/27$; $p=3.11\times10^{-4}$).
 
 \tightparagraph{Placement shifts much more than endpoint redirection for $\pi_{0.5}$ and Nano:}
 Against those requested-side-depth shifts, endpoint redirection changes by $-1.12$\,cm for $\pi_{0.5}$ and $+0.5$\,cm for Nano.
@@ -484,7 +484,6 @@ Appendix~\ref{app:failure_labels} reports descriptive failure counts for the ful
 
 \tightparagraph{A binary score can fail in opposite directions.}
 Reflection shows how layout-dependent completion can be misread as a grounding failure; reference inversion shows how a reassuring familiar-frame response can be misread as relation-level grounding.
-The measurements locate both errors: a binary ceiling can hide a placement change, and an executed trace can change without expressing the intended relation.
 The frozen predicate remains the final completion test, but it cannot identify the cause.
 
 \tightparagraph{Binary thresholding can expose or hide placement shifts.}
@@ -498,16 +497,12 @@ For $\pi_{0.5}$, reflection changes requested-side depth by $-34.6$\,cm while th
 The tested symmetric scene shrinks the binary gap but leaves a $20.2$-percentage-point residual.
 The controls therefore show that the score depends on layout; they do not identify what produces the remainder.
 
-\tightparagraph{What a directional evaluation needs in order to be interpretable.}
-For relational placement, we recommend matched base-frame \tokLR{} prompts under identical reset and policy seeds, paired with action distinctness, a signed endpoint measure, requested-side depth, and the frozen success predicate.
-Where stochasticity is material, add same-prompt repeats.
-Attribution further requires at least one matched scene intervention with a preserved endpoint-redirection positive control and a reference inversion that preserves the physical goal.
-Claims that an effect disappeared should rest on equivalence tests rather than a nonsignificant difference.
-
 \tightparagraph{Directional gaps require matched scene controls.}
 Directional and relational success contrasts are often used to support a linguistic attribution.
-Our results show that, in this evaluation, a directional gap and a layout effect are not separable without a matched scene intervention.
-A published directional gap measured without that control may therefore reflect the evaluation scene.
+Our results show that, in this evaluation, a directional gap and a layout effect are not separable without a matched scene intervention; a published gap measured without that control may reflect the evaluation scene.
+For relational placement we therefore recommend matched base-frame \tokLR{} prompts under identical reset and policy seeds, paired with action distinctness, a signed endpoint measure, requested-side depth, and the frozen success predicate, with same-prompt repeats where stochasticity is material.
+Attribution further requires at least one matched scene intervention with a preserved endpoint-redirection positive control and a reference inversion that preserves the physical goal.
+Claims that an effect disappeared should rest on equivalence tests rather than a nonsignificant difference.
 
 % =============================================================================
 % VIII. LIMITATIONS
@@ -538,7 +533,7 @@ Released checkpoints cannot provide that test.
 \label{sec:conclusion}
 
 Directional success does not isolate language grounding.
-Matched reflection and reference inversion show that layout and linguistic frame change the score, while Nano shows why completion alone can miss placement change.
+Matched reflection and reference inversion show that layout and linguistic frame change the score, and a checkpoint near ceiling shows why completion alone can miss placement change.
 Directional grounding therefore requires controls that separate language response from scene-conditioned competence.
 
 % =============================================================================
