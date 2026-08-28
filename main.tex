@@ -1,11 +1,11 @@
 % !TEX program = pdflatex
 % =============================================================================
-% Mirroring the Scene Flips the Score: Matched Controls for Directional
-% Language Grounding
+% Mirroring the Scene Flips the Score: Directional Success Depends on Layout
+% in Language-Conditioned Manipulation
 %
 % Single-file source. Only references.bib and figures/ are external.
-% Section order: Introduction, Related Work, Audit Design, Base-Frame Response,
-% Directional Completion, Symmetric Scene, Discussion, Limitations, Conclusion,
+% Section order: Introduction, Related Work, Audit Design, Reflection,
+% Reference Inversion, Symmetric Scene, Discussion, Limitations, Conclusion,
 % references, Appendix A.
 % =============================================================================
 
@@ -81,7 +81,7 @@ Ali-Adeeb Abbas$^{1,2}$, Esmaeil Seraj$^{2}$, Behrad Toghi$^{2}$ and Taskin Padi
 \setlength{\dblfloatsep}{10pt plus 2pt minus 2pt}
 
 \title{Mirroring the Scene Flips the Score:\\
-Matched Controls for Directional Language Grounding}
+Directional Success Depends on Layout in Language-Conditioned Manipulation}
 \author{%
 \ifanonymous
 Anonymous Authors%
@@ -97,14 +97,14 @@ Anonymous Authors%
 % ABSTRACT
 % =============================================================================
 \begin{abstract}
-Binary success gaps between opposite spatial commands are often treated as direct evidence of language grounding, even though completion also depends on scene geometry.
-For $\pi_{0.5}$, reflecting only the movable-object centers reverses completion: $4/27$ \tokL{} and $25/27$ \tokR{} become $25/27$ and $9/27$, with the policy, prompts, controller, and seeds unchanged.
-The near-mirror pairing shows that the measured gap belongs to the policy--layout pair, not to the checkpoint alone.
-Matched reference inversion exposes a second limit: describing the same physical goals from the other object's frame collapses $\pi_{0.5}$ endpoint separation from $23.28$\,cm to $0.19$\,cm.
-A binary gap can also conceal placement change: in Nano's matched 27-seed symmetric-scene core, the binary interaction is exactly zero ($p=1$) alongside a $-13.9$\,cm requested-side-depth interaction.
-A powered $\pi_{0.5}$ residual remains and fails the prespecified equivalence criteria; the symmetric-scene control therefore neither removes every disparity nor localizes the residual to the policy.
-Together, these results show why neither a large nor a small completion gap identifies directional grounding without matched tests of wording and layout.
-We recommend reporting prompt-conditioned action response, signed endpoint ordering, requested-side depth, and frozen task completion separately, together with matched language and scene controls.
+Directional success gaps between opposite spatial commands are often read as evidence of language grounding, although completion also depends on the scene in which a command is executed.
+We test that attribution with matched interventions that hold the checkpoint, controller, and seeds fixed while either reflecting object layout with the prompts unchanged or re-expressing the same physical goals in another linguistic reference frame.
+For $\pi_{0.5}$, reflecting only the movable-object centers reverses completion: $4/27$ \tokL{} and $25/27$ \tokR{} become $25/27$ and $9/27$.
+The same checkpoint therefore favors opposite directions in two layouts; its directional gap is not a checkpoint-level grounding property.
+On matched physical goals, expressing the relation from the other object's frame collapses $\pi_{0.5}$ endpoint separation from $23.28$\,cm to $0.19$\,cm.
+Nano's completion interaction is zero, yet matched requested-side depth shifts by $13.9$\,cm.
+A $20.2$-percentage-point $\pi_{0.5}$ gap remains in the symmetric scene and does not meet the prespecified equivalence criterion; the control changes the gap without identifying its cause.
+Directional success is therefore a property of the policy--layout pair and cannot, by itself, isolate language grounding.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -123,49 +123,40 @@ A representative protocol holds the scene fixed and asks the policy to place an 
 It balances trials between the two directions and scores each with a frozen success rubric~\cite{chen2026steerable}.
 It is tempting to read a large \tokLR{} gap as a language-grounding failure: the model understood one direction but not the other, or vision overrode language~\cite{fang2026cag}.
 
-That reading is plausible because the failure it names is real.
-Robot datasets carry formulaic, low-diversity instruction labels, making the instruction largely predictable from the observation~\cite{wanna2026linguistic}.
-A conditioned policy can then ignore its language input, the posterior collapse familiar from conditional sequence models~\cite{bowman2016continuous,he2019lagging}.
-It also motivates the remedies: counterfactual relabeling~\cite{glossop2025cast}, denser command interfaces~\cite{chen2026steerable,smith2025steer,wang2026insight}, and test-time language steering~\cite{jeong2026steering}.
-These methods address genuine weaknesses in instruction following.
-The attribution problem is whether a binary directional score shows that weakness in a particular experiment~\cite{chen2026resteer}.
+That reading is plausible because robot datasets often use formulaic, low-diversity instruction labels, making the command predictable from the observation and allowing a conditioned policy to ignore language~\cite{wanna2026linguistic,bowman2016continuous,he2019lagging}.
+The attribution question is whether a binary directional score demonstrates that failure in a particular experiment~\cite{chen2026resteer}.
 
 That score combines several questions.
 For a trial to succeed, the instruction has to alter control, the change has to point toward the requested relation, the robot has to execute a feasible grasp and transport, and the final state has to cross a binary task boundary.
-A policy can pass the first two steps but fail the last two because one side of a particular layout is harder to reach.
+A policy can pass the first two stages yet fail the last two because, for that checkpoint, one requested placement is harder to complete in the sampled configuration.
 The reverse mistake is also possible: a policy can react to the literal tokens \tokL{} and \tokR{} without preserving the physical goal once the linguistic reference frame is inverted~\cite{li2025confined}.
-A single binary contrast can therefore produce two opposite errors: a false failure when language redirects the endpoint but geometry blocks completion, and a false pass when familiar wording elicits the expected behavior without relation-level transfer.
+A single binary contrast can therefore produce two opposite errors: a false failure when language redirects the endpoint but scene-conditioned task competence differs by direction, and a false pass when familiar wording elicits the expected behavior without relation-level transfer.
 
 Our central finding is an invariance failure: the directional gap is a property of the policy--layout pair, not a layout-invariant property of the checkpoint.
-Reflection reverses completion for $\pi_{0.5}$: $4/27$ \tokL{} and $25/27$ \tokR{} successes become $25/27$ and $9/27$ after the movable-object centers are mirrored, with the policy, prompts, controller, and seeds unchanged (Fig.~\ref{fig:reflection}).
-The near-mirror pairing is striking: reflected \tokL{} exactly matches control \tokR{} at $25/27$, while reflected \tokR{} is $9/27$ against control \tokL{} at $4/27$.
-We treat that five-success mismatch as the part not removed by this object-position reflection, without assigning it to a particular model-side mechanism.
+Reflection reverses completion with checkpoint, prompts, controller, and seeds fixed (Fig.~\ref{fig:reflection}); Sec.~\ref{sec:reflection} gives the paired analysis.
 
-Geometry is not the only threat to interpretation.
-When the same physical goals are expressed from the other object's reference frame---``cube left of bowl'' becomes ``bowl right of cube,'' and conversely---$\pi_{0.5}$ endpoint separation collapses from $23.28$\,cm to $0.19$\,cm.
+Scene dependence is not the only threat to interpretation.
+When the same physical goals are expressed from the other object's reference frame---``cube left of bowl'' becomes ``bowl right of cube,'' and conversely---the familiar base-frame endpoint separation nearly vanishes.
 Base-frame sensitivity to \tokL{} and \tokR{} therefore does not establish that the underlying relation transfers across linguistic frames.
 
-The contribution is not merely an additional metric; it changes what a directional score can support.
-Before intervention, the $\pi_{0.5}$ completion gap is consistent with asymmetric grounding.
-After reflection, the same evaluation favors the opposite direction, even though the prompt still redirects the endpoint.
-Reference inversion exposes the complementary error: a reassuring base-frame response need not survive an equivalent statement of the physical relation.
-Together, the controls show why neither a large nor a small binary gap identifies grounding without matched interventions on both wording and layout.
+The controls change what a directional score can support.
+A large gap can be a false grounding failure when one layout makes one requested placement harder to complete; a reassuring base-frame response can be a false pass when it does not survive the tested equivalent expression of the relation.
+Reflection exposes the first error, reference inversion exposes the second, and the endpoint decomposition makes both visible.
 
 We make three contributions, ordered by the claims they support:
 \begin{itemize}
-    \item \textbf{A matched object-layout intervention that reverses directional completion.} A pure reflection reverses $\pi_{0.5}$ completion. It also reverses the requested-side-depth advantage in three DROID/RoboLab checkpoints; graded displacement and symmetric-scene controls show the same dependence in continuous placement.
-    \item \textbf{A reference-inversion control for relation-level transfer.} Holding each physical goal and the manipulated object fixed while changing the linguistic frame reduces $\pi_{0.5}$ endpoint separation from $23.28$\,cm to $0.19$\,cm.
-    \item \textbf{An evidence-gated directional evaluation protocol.} We separate executed-action response, signed endpoint ordering, requested-side depth, and frozen task completion. Scene effects are interpreted only where endpoint redirection survives; Nano's matched 27-seed symmetric-scene core has zero binary interaction alongside a $-13.9$\,cm depth interaction, showing why this decomposition is necessary.
+    \item \textbf{A matched intervention that identifies layout dependence.} A pure object-position reflection supplies the decisive within-checkpoint comparison; graded displacement and symmetric-scene controls test the same dependence in continuous placement.
+    \item \textbf{A reference-inversion control for relation-level transfer.} Holding each physical goal and the manipulated object fixed while changing the linguistic frame shows that familiar base-frame endpoint separation does not survive the tested reference inversion.
+    \item \textbf{A decomposition that separates redirection from completion.} Executed-action response, signed endpoint ordering, requested-side depth, and frozen task completion show where a directional contrast changes. This decomposition exposes layout-dependent placement even when binary success is at ceiling.
 \end{itemize}
 None requires retraining, new hardware, or a change to the frozen success predicate.
 
 \begin{figure*}[t]
   \centering
   \includegraphics[width=0.98\textwidth]{figures/reflection_core.pdf}
-  \caption{\textbf{Reflecting movable-object positions reverses placement advantage within checkpoint.}
+  \caption{\textbf{Reflection changes continuous placement and reverses $\pi_{0.5}$ completion.}
   Left: reflected-minus-control interaction in requested-side depth, with seed-clustered 95\% bootstrap intervals; fractions give seeds with a negative interaction.
-  Right: $\pi_{0.5}$ completion changes from $4/27$ \tokL{} and $25/27$ \tokR{} in control to $25/27$ and $9/27$ after reflection.
-  Reflected \tokL{} exactly matches control \tokR{}, while reflected \tokR{} approaches control \tokL{}.
+  Right: the $\pi_{0.5}$ completion advantage reverses after reflection; plotted fractions give the success counts.
   All causal comparisons are within checkpoint; the panels do not support cross-model ranking.}
   \label{fig:reflection}
 \end{figure*}
@@ -223,17 +214,25 @@ We issue the instruction once at reset and leave it alone: no oracle actions, no
 DROID/RoboLab pairs the DROID Franka embodiment~\cite{khazatsky2024droid} with the RoboLab Isaac Sim environment~\cite{nvlabs2026robolab} and uses a Rubik's cube and bowl; RoboTwin~\cite{mu2025robotwin} uses a wooden block and playing-card box.
 Both require placement and release in the requested relational region.
 
-\tightparagraph{Evaluation corpus.}
-Table~\ref{tab:corpus} lists the evaluated checkpoints; App.~\ref{app:provenance} records the available artifact identifier and revision behind each row.
+\tightparagraph{Checkpoints and pre-intervention screen.}
+Table~\ref{tab:corpus} lists the eight expanded Phase-A rows; App.~\ref{app:provenance} records the available artifact identifier and revision behind each one.
 Two are action-only VLAs and six are world-action models (WAM), which predict future observations alongside actions.
 Within each arena, checkpoints use its fixed action interface and frozen predicate.
 Edge and Nano are the 4B and 16B policies of one Cosmos3 family~\cite{nvidia2026cosmos3}, so the rows are not fully independent.
-The screen runs one matched-pair row per checkpoint and arena before any intervention: five DROID/RoboLab checkpoints at 27 matched pairs each and three RoboTwin checkpoints at 63, for 324 pairs, or 648 episodes.
+The checkpoints come from different developers with different pretraining mixtures and post-training recipes; exact training-episode membership, caption exposure, and sampling weights are undisclosed.
+Every causal contrast is therefore within checkpoint.
+Cross-row differences provide context only; no comparison across rows is load-bearing.
+
+We define the pre-intervention screen as one completed matched-pair row per checkpoint and arena.
+Repository evidence spans eleven checkpoint identities.
+Of these, the Phase-A screen reported here comprises eight checkpoint--arena rows: five DROID/RoboLab rows at 27 matched pairs each and three RoboTwin rows at 63 matched pairs each, for 324 pairs or 648 episodes.
+The remaining identities appear only in separate cohorts: a 20-pair $\pi_0$-FAST compatibility bridge and two bounded three-pair RoboTwin gates, LingBot-VLA 4B (distinct from the screened LingBot-VA checkpoint) and Light-WAM.
+Because those cohorts use different designs and denominators, we do not pool them into the Phase-A screen.
 The two arenas use different tasks and different success tests, so no outcome estimate or effect pools arenas; totals across rows are bookkeeping only, and the larger intervention cohorts state their own denominators.
 
 \begin{table}[t]
   \centering
-  \caption{Evaluated checkpoint--arena rows; short names in parentheses.}
+  \caption{Expanded Phase-A checkpoint--arena rows in the pre-intervention screen; short names in parentheses.}
   \label{tab:corpus}
   \small
   \begin{tabular}{@{}lcr@{}}
@@ -272,9 +271,11 @@ $S_i^d$ is task completion, and requested-side depth $M_i^d$ records where the t
 \tightparagraph{Calibrating $A_i$ against sampling noise.}
 $A_i$ tests response, not semantics, and alone it is weak evidence: stochastic sampling makes two executions differ even under an unchanged prompt.
 We therefore calibrate it on a single frozen observation, querying the policy without executing the robot so that no difference compounds through dynamics.
-The diagnostic issues 336 action requests across six conditions (three DROID/RoboLab checkpoints crossed with the control and reflected scenes), each including a repeated request that must return identical output.
-Its summary is a prompt-to-noise ratio: the \tokLR{} action difference at a matched seed over the root-mean-square difference between distinct seeds under an unchanged prompt.
-When repeated requests are bit-identical in this harness, the denominator is zero; for those rows we report the numerator alone rather than treating an undefined ratio as a small one.
+The diagnostic issues 336 action requests across six checkpoint--layout conditions (three DROID/RoboLab checkpoints crossed with the control and reflected scenes).
+Each condition contains 27 matched \tokLR{} seed pairs and one exact repeat per direction at seed 9400; all 12 repeat comparisons are bit-identical.
+For seed $s$, prompt effect is $\operatorname{RMS}(a_s^L,a_s^R)$ over the complete native returned action arrays; the noise pool contains $\operatorname{RMS}(a_s^d,a_{s'}^d)$ for each prompt $d$ and every distinct-seed pair $s<s'$.
+The prompt-to-noise ratio divides the median of the 27 prompt effects by the median of the 702 pooled same-prompt distances.
+The exact repeats verify reproducibility and do not define the noise denominator; when the pooled cross-seed median is zero, the ratio is undefined and we report the prompt-effect numerator alone.
 
 \tightparagraph{Reference inversion.}
 Base-frame prompts change the surface token and physical goal together; the reference-inversion control instead holds the physical relation fixed and changes its linguistic frame.
@@ -290,7 +291,7 @@ The robot, cameras, fixed scene geometry, prompts, seeds, and controller remain 
 We pair it with two further interventions fixed in advance: a seven-level sweep that moves only the reference object laterally and a symmetric-scene cohort that drives a registered movable-object asymmetry metric to zero (App.~\ref{app:symmetry_metric}).
 The symmetric package also changes which other objects are present, so it is not a position-only intervention and does not imply bilateral embodiment symmetry.
 Scene-effect claims are made only for rows that pass the prespecified endpoint-redirection positive control, which asks whether the policy still moves its endpoint in the commanded direction.
-Failed rows are reported but remain uninterpretable for attenuation of a directional gap.
+Failed rows are reported but do not support a claim that the intervention attenuates a directional gap.
 
 \tightparagraph{Scoring and inference.}
 We do not relax the original task predicate.
@@ -302,71 +303,18 @@ Prompts, seeds, success tests, target quantities, margins, and the failure-label
 The public audit archive\footnote{\url{https://github.com/adeeb10abbas/steerable}} records the available manifests, seeds, checkpoint revisions, and freeze times for the reported cohorts.
 
 % =============================================================================
-% IV. REFERENCE INVERSION COLLAPSES ENDPOINT SEPARATION
-% =============================================================================
-\section{Reference Inversion Collapses Endpoint Separation}
-\label{sec:language}
-
-Reference inversion collapses endpoint separation for $\pi_{0.5}$ from $23.28$\,cm to $0.19$\,cm on matched physical goals (Fig.~\ref{fig:inversion}).
-This is the linguistic counterpart to the scene controls: a familiar base-frame response does not survive when the same relation is expressed from the other object's perspective.
-
-\tightparagraph{Base-frame positive control.}
-All 324 base-frame minimal pairs across the eight rows execute different action sequences: 135 DROID/RoboLab pairs and 189 RoboTwin pairs.
-Endpoint ordering is positive in $125/135$ and $128/189$ pairs, respectively.
-These bitwise differences supply the matched trace-difference positive control.
-They do not show that the policy represents the relation independently of its wording, nor do they guarantee task completion.
-
-The fixed-observation diagnostic of Sec.~\ref{sec:method} separates that response from sampling noise.
-For $\pi_{0.5}$, prompt-induced action difference was about $4\%$ of cross-seed same-prompt variation, yet the difference vectors shared a consistent orientation across seeds (mean cosine $0.540$ in control and $0.652$ after reflection; permutation $p<10^{-5}$).
-For Nano the same magnitude ratio was $0.72$ under the control scene and $1.19$ after reflection, but the orientations were far less consistent (mean cosine $0.027$ and $0.079$; control permutation $p=.167$).
-Repeated DreamZero requests were bit-identical in this fixed-observation harness, so its ratio is undefined rather than small; whether that behavior belongs to the checkpoint or to harness seeding remains unresolved.
-These open-loop rankings did not match closed-loop endpoint ordering, so action difference is a positive control, not a standalone grounding score.
-A small, consistently oriented change could accumulate during replanning, but that explanation remains untested.
-
-\tightparagraph{Matched reference inversion.}
-Reference inversion asks whether the same physical relation survives being expressed from the other object's frame.
-Under inversion the direction word and the physical goal point opposite ways, which separates two behaviors that base-frame prompts cannot tell apart.
-If the policy tracks the relation, the physical-\tokL{}-minus-physical-\tokR{} endpoint contrast should be positive.
-If it tracks the direction word regardless of the sentence frame, the contrast should be negative, reaching $-23.28$\,cm if the base-frame response transferred unchanged.
-
-Base-frame prompts separate the endpoints by $+23.28$\,cm (95\% CI $[21.89,24.56]$), whereas reference-inverted prompts yield only $+0.19$\,cm ($[-0.88,1.27]$).
-The observed response therefore collapses rather than transferring at the base-frame scale by either rule; the inverted interval includes zero, although equivalence to zero was not established.
-Out-of-distribution phrasing remains an alternative explanation that this experiment does not separate from failed relation transfer.
-This conclusion is specific to endpoint direction, not all prompt sensitivity; all 682 base-frame/inverted physical-goal pairs execute different action traces.
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=0.98\columnwidth]{figures/reference_inversion.pdf}
-  \caption{\textbf{Reference inversion collapses directional endpoint separation for $\pi_{0.5}$.}
-  Top: physical-\tokL{}-minus-physical-\tokR{} endpoint separation with seed-clustered 95\% bootstrap intervals; positive is relation-consistent.
-  Bottom: inverted-minus-base-frame requested-side depth with 90\% intervals; labels give base-frame-to-inverted success counts out of 341.
-  This cohort's seeds are disjoint from those of the scene-intervention experiments.}
-  \label{fig:inversion}
-\end{figure}
-
-Inversion also reduces placement depth within each physical goal.
-The inverse-minus-base-frame change is $-9.78$\,cm for physical \tokL{} (90\% CI $[-10.92,-8.59]$) and $-13.31$\,cm for physical \tokR{} ($[-14.07,-12.54]$); both intervals lie outside the prespecified $\pm4.15$\,cm equivalence margin.
-Success falls from $210/341$ to $151/341$ for \tokL{} and from $297/341$ to $240/341$ for \tokR{}.
-These rates make a wholesale switch to moving only the bowl less consistent with the evidence: the predicate scores placement of the cube, yet $151$ and $240$ of $341$ inverted episodes still satisfy it.
-Because reference-object displacement was not measured, the counts do not exclude incidental bowl motion or a mixed strategy.
-The corresponding changes, $-17.30$ and $-16.72$ percentage points, do not meet the prespecified $\pm15.56$-point equivalence criterion.
-Base-frame response is therefore insufficient evidence that a physical relation is preserved across reference frames.
-
-% =============================================================================
-% V. REFLECTION REVERSES DIRECTIONAL COMPLETION
+% IV. REFLECTION REVERSES DIRECTIONAL COMPLETION
 % =============================================================================
 \section{Reflection Reverses Directional Completion}
 \label{sec:reflection}
 
-Reflection reverses completion for $\pi_{0.5}$: $4/27$ \tokL{} and $25/27$ \tokR{} successes become $25/27$ and $9/27$ after only the movable-object centers are mirrored in world coordinates, with the policy, prompts, controller, and seeds unchanged.
-This is a pure world-state intervention: only movable-object centers are reflected; observations are rendered normally and actions are executed without a coordinate transform.
-The resulting pairing is nearly mirrored.
-Control \tokR{} and reflected \tokL{} each succeed in $25/27$ trials, while control \tokL{} and reflected \tokR{} succeed in $4/27$ and $9/27$.
-Reflected \tokR{} therefore has five additional successes relative to control \tokL{}; this is the descriptive remainder not removed by object-position reflection, not evidence for a particular policy-side mechanism.
+Under the prespecified reflection of Sec.~\ref{sec:method}, the $\pi_{0.5}$ completion advantage reverses from \tokR{} to \tokL{}.
+The paired outcomes are nearly mirrored: control \tokR{} and reflected \tokL{} each succeed in $25/27$ trials, whereas control \tokL{} and reflected \tokR{} succeed in $4/27$ and $9/27$.
+The latter five-success difference is the part that reflection does not remove.
 
-The eight-row pre-intervention screen provides context rather than causal evidence (Fig.~\ref{fig:screening}).
+The eight-row Phase-A screen provides descriptive context (Fig.~\ref{fig:screening}).
 $\pi_{0.5}$ and DreamZero favor \tokR{}, Nano is near ceiling, and GR00T completes only $3/27$ \tokL{} and $0/27$ \tokR{} trials; $49/54$ GR00T episodes fail at pickup.
-The RoboTwin screening gaps are descriptively small, but two checkpoints later fail the endpoint-redirection positive control, so those nulls are uninterpretable rather than failed cross-arena replications.
+The RoboTwin screening gaps are descriptively small, but two checkpoints later fail the endpoint-redirection positive control, so those rows do not test the layout-dependence claim.
 
 \begin{figure*}[t]
   \centering
@@ -401,13 +349,19 @@ Nano, the checkpoint closest to the binary ceiling, illustrates why in Fig.~\ref
 The reflected-minus-control requested-side-depth interaction is negative in every reflection checkpoint (Fig.~\ref{fig:reflection}).
 The interaction is $-34.6$\,cm for $\pi_{0.5}$ (95\% CI $[-41.4,-28.5]$; $27/27$ seeds; $p=1.49\times10^{-8}$).
 It is $-24.8$\,cm for Nano ($[-32.4,-17.3]$; $24/27$; $p=4.92\times10^{-5}$) and $-14.1$\,cm for DreamZero ($[-19.9,-8.2]$; $23/27$; $p=3.11\times10^{-4}$).
-For Nano and $\pi_{0.5}$, the estimated interactions in endpoint redirection are much smaller, $+0.5$\,cm and $-1.12$\,cm.
-Both carry $p=.701$ because the exact sign test sees mirrored 15/12 and 12/15 splits over the same 27 seeds, not because the estimates agree; equivalence was not established, so we do not call redirection invariant.
-The supported contrast is that placement changes far more than the estimated redirection interaction.
+For $\pi_{0.5}$, reflection changes requested-side depth by $-34.6$\,cm but endpoint redirection by $-1.12$\,cm; for Nano, the corresponding changes are $-24.8$ and $+0.5$\,cm.
+The two redirection interactions each have $p=.701$ because their signs split 12/15 and 15/12 over the same 27 seeds.
+Equivalence was not established, so neither redirection interaction is described as invariant.
 
-Each seed contributes $(Y_R^{\mathrm{refl}}-Y_L^{\mathrm{refl}})-(Y_R^{\mathrm{ctrl}}-Y_L^{\mathrm{ctrl}})$, so a negative value means reflection reduces or reverses the control-layout \tokR{} advantage.
+Each seed contributes $(S_i^{R,\mathrm{refl}}-S_i^{L,\mathrm{refl}})-(S_i^{R,\mathrm{ctrl}}-S_i^{L,\mathrm{ctrl}})$, so a negative value means reflection reduces or reverses the control-layout \tokR{} completion advantage.
 The mean of this per-seed completion interaction is $-1.37$ on its $[-2,2]$ scale ($p=5.96\times10^{-8}$).
 In this $\pi_{0.5}$ DROID/RoboLab cohort, reflecting the movable-object centers flips the observed completion advantage under the unchanged frozen predicate.
+The reversal is also not an artifact of one policy draw: eight samples in each of 27 fixed scenes yield $41/216$ \tokL{} and $197/216$ \tokR{} successes.
+
+The reversal cannot be explained by a fixed directional marginal alone.
+Because the checkpoint is unchanged across layouts, a constant exposure-driven preference supplies no mechanism for the observed layout interaction.
+Exposure conditioned on object configuration remains consistent with the result, however, and these experiments do not distinguish geometry-as-physics from geometry-as-coverage.
+Section~\ref{sec:limitations} states the experiment needed to separate them.
 
 \subsection{A graded intervention and converging controls}
 \label{sec:graded}
@@ -431,11 +385,61 @@ Because the fitted zero crossing lies outside the tested support, the data do no
 \end{figure*}
 
 Fig.~\ref{fig:scene} also shows why binary success alone is a weak diagnostic here: \tokL{} completion changes from $15/15$ to $10/15$, while \tokR{} stays close to ceiling.
-Separate registered cohorts point in the same direction without being pooled with reflection.
-For Nano, moving the target's start side changes success from $26/27$ versus $22/27$ to $23/27$ versus $27/27$ (interaction $+0.296$, $p=.0156$).
+Separate registered Nano cohorts support the same layout-dependence claim without being pooled with reflection.
+For Nano, the \tokR{}-minus-\tokL{} success gap changes from $(22-26)/27=-4/27$ when the target starts robot-left of the reference to $(27-23)/27=+4/27$ when it starts robot-right.
+Under the registered right-start-minus-left-start convention, the interaction is therefore $+8/27=+0.296$ ($p=.0156$).
 Also for Nano, swapping target and reference roles changes the depth contrast by $+13$\,cm (95\% CI $[6,21]$, $p=.00151$).
 The role swap keeps the direction word and relation template fixed but changes the manipulandum and physical goal; reference inversion instead keeps both fixed while changing the linguistic frame.
-For $\pi_{0.5}$, repeating policy sampling eight times in each of 27 fixed scenes gives 216 matched pairs per direction, with $41/216$ \tokL{} and $197/216$ \tokR{} successes, showing that the gap is not an artifact of one draw.
+
+% =============================================================================
+% V. REFERENCE INVERSION COLLAPSES ENDPOINT SEPARATION
+% =============================================================================
+\section{Reference Inversion Collapses Endpoint Separation}
+\label{sec:language}
+
+Reference inversion collapses endpoint separation for $\pi_{0.5}$ from $23.28$\,cm to $0.19$\,cm on matched physical goals (Fig.~\ref{fig:inversion}).
+This is the linguistic counterpart to the scene controls: familiar base-frame endpoint separation does not survive when the same relation is expressed from the other object's perspective.
+
+\tightparagraph{Matched reference inversion.}
+Reference inversion asks whether the same physical relation survives being expressed from the other object's frame.
+Under inversion the direction word and the physical goal point opposite ways, which separates two behaviors that base-frame prompts cannot tell apart.
+If the policy tracks the relation, endpoint position for the leftward goal minus that for the rightward goal should be positive.
+If it tracks the direction word regardless of the sentence frame, the contrast should be negative, reaching $-23.28$\,cm if the base-frame response transferred unchanged.
+
+Base-frame prompts separate the endpoints by $+23.28$\,cm (95\% CI $[21.89,24.56]$), whereas reference-inverted prompts yield only $+0.19$\,cm ($[-0.88,1.27]$).
+The near-zero response supports neither relation-preserving transfer ($+23.28$\,cm) nor simple token mirroring ($-23.28$\,cm); its interval includes zero, although equivalence to zero was not established.
+Out-of-distribution phrasing remains an alternative explanation that this experiment does not separate from failed relation transfer.
+This conclusion is specific to endpoint direction, not all prompt sensitivity; all 682 base-frame/inverted physical-goal pairs execute different action traces.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.98\columnwidth]{figures/reference_inversion.pdf}
+  \caption{\textbf{Reference inversion collapses directional endpoint separation for $\pi_{0.5}$.}
+  Top: leftward-minus-rightward physical-goal endpoint separation with seed-clustered 95\% bootstrap intervals; positive is relation-consistent.
+  Bottom: inverted-minus-base-frame requested-side depth with 90\% intervals; labels give base-frame-to-inverted success counts out of 341.
+  This cohort's seeds are disjoint from those of the scene-intervention experiments.}
+  \label{fig:inversion}
+\end{figure}
+
+Inversion also reduces placement depth within each physical goal.
+The inverse-minus-base-frame change is $-9.78$\,cm for the leftward goal (90\% CI $[-10.92,-8.59]$) and $-13.31$\,cm for the rightward goal ($[-14.07,-12.54]$); both intervals lie outside the prespecified $\pm4.15$\,cm equivalence margin.
+Success falls from $210/341$ to $151/341$ for the leftward goal and from $297/341$ to $240/341$ for the rightward goal.
+These rates make a wholesale switch to moving only the bowl less consistent with the evidence: the predicate scores placement of the cube, yet $151$ and $240$ of $341$ inverted episodes still satisfy it.
+Because reference-object displacement was not measured, the counts do not exclude incidental bowl motion or a mixed strategy.
+The corresponding changes, $-17.30$ and $-16.72$ percentage points, do not meet the prespecified $\pm15.56$-point equivalence criterion.
+Base-frame response is therefore insufficient evidence that a physical relation is preserved across reference frames.
+
+\tightparagraph{Base-frame and fixed-observation checks.}
+All 324 base-frame minimal pairs across the eight rows execute different action sequences: 135 DROID/RoboLab pairs and 189 RoboTwin pairs.
+Endpoint ordering is positive in $125/135$ and $128/189$ pairs, respectively.
+These bitwise differences supply the matched trace-difference positive control; they do not show that the policy represents the relation independently of its wording or guarantee task completion.
+
+The fixed-observation diagnostic of Sec.~\ref{sec:method} separates prompt response from sampling noise.
+For $\pi_{0.5}$, the prompt-induced median action difference is $4.1\%$ of the pooled same-prompt cross-seed median in control and $3.3\%$ after reflection, yet its difference vectors share a consistent orientation across seeds (mean cosine $0.540$ and $0.652$; permutation $p<10^{-5}$).
+For Nano, the corresponding ratios are $0.720$ and $1.192$, but the orientations are far less consistent (mean cosine $0.027$ and $0.079$; permutation $p=.167$ and $.00314$).
+For DreamZero, all 702 same-prompt cross-seed distances are zero in each layout, while median prompt RMS is $0.00923$ in control and $0.02348$ after reflection.
+Its ratio is therefore undefined rather than small; whether the zero measured variation belongs to the checkpoint or to harness seeding remains unresolved.
+These open-loop rankings do not match closed-loop endpoint ordering, so action difference is a positive control, not a standalone grounding score.
 
 % =============================================================================
 % VI. BINARY CEILINGS HIDE PLACEMENT CHANGE
@@ -443,21 +447,18 @@ For $\pi_{0.5}$, repeating policy sampling eight times in each of 27 fixed scene
 \section{Binary Ceilings Hide Placement Change}
 \label{sec:symmetry}
 
-Ceilings hide placement change: in the matched 27-seed symmetric-scene core, Nano has exactly zero binary interaction ($p=1$) alongside a $-13.9$\,cm requested-side-depth interaction ($p=1.8\times10^{-4}$).
-On success alone, the layout appears to have no effect; the continuous endpoint measure shows otherwise.
+Nano supplies the binary-ceiling case previewed in the abstract.
+Its completion interaction is zero ($p=1$), whereas requested-side depth shifts by $-13.9$\,cm ($p=1.8\times10^{-4}$).
+The zero binary interaction therefore conceals a substantial placement change.
 
-The symmetric-scene cohort contains 4,096 episodes and 2,048 matched pairs across five checkpoint--arena rows.
-The rows contribute unequally.
-For $\pi_{0.5}$, 763 pairs comprise 341 at each endpoint plus 27 at each of three intermediate levels; for Nano, 1,123 comprise 521 at each endpoint plus the same three 27-pair levels.
-Edge, DreamZero, and FastWAM contribute 27 pairs at each endpoint, or 54 each.
-The intervention sets the registered movable-object asymmetry metric to zero, but it replaces a scene package, including which other objects are present, rather than changing positions alone.
-Four DROID/RoboLab checkpoints pass the endpoint-redirection positive control and support a scene-effect interpretation.
-GR00T is outside this cohort because it almost never completes the task in either direction; this is a scope decision, not a failed control.
-FastWAM and a separate 108-episode LingBot-VA RoboTwin cohort fail the positive control, so we report those rows without treating a smaller gap as a geometry effect.
-The $\pi_{0.5}$ seeds here are disjoint from the 341 used for reference inversion.
+The symmetric-scene cohort contains 4,096 episodes (2,048 matched pairs) across five checkpoint--arena rows.
+The dense rows contribute 763 $\pi_{0.5}$ pairs and 1,123 Nano pairs; Edge, DreamZero, and FastWAM contribute 54 each.
+The intervention zeros the registered movable-object asymmetry metric but replaces a scene package rather than changing positions alone.
+Four DROID/RoboLab checkpoints pass the endpoint-redirection control and support a scene-effect interpretation; FastWAM and a separate 108-episode LingBot-VA cohort fail it and are reported without that interpretation.
+GR00T is excluded because it almost never completes, and the $\pi_{0.5}$ seeds are disjoint from those used for reference inversion.
 
 For $\pi_{0.5}$, 341 prompt pairs at each endpoint show the binary \tokR{}-minus-\tokL{} gap falling from 74.2 to 20.2 percentage points and the requested-depth gap from 17.0 to 5.75\,cm.
-At the symmetric endpoint, their paired 90\% intervals are $[15.0,25.2]$ points against a prespecified $\pm15.56$-point margin and $[4.85,6.66]$\,cm against $\pm4.15$\,cm; neither is equivalent.
+At the symmetric endpoint, their paired 90\% intervals are $[15.0,25.2]$ points against a prespecified $\pm15.56$-point margin and $[4.85,6.66]$\,cm against $\pm4.15$\,cm; neither meets its equivalence criterion.
 The prespecified power audit at $n=341$ gives an 80\%-power minimum detectable effect of 7.8 percentage points for the binary gap, relative to the 15.56-point equivalence margin.
 A separately registered matched core uses 27 seeds shared across layouts; it estimates interactions of $-51.9$ points (95\% CI $[-81.5,-22.2]$, $p=.00786$) and $-12.4$\,cm (95\% CI $[-19.7,-4.9]$, $p=.00348$), respectively.
 Base-frame redirection at the symmetric endpoint is $+23.9$\,cm, with $335/341$ positive pairs.
@@ -477,28 +478,13 @@ These unpaired endpoint totals are descriptive bookkeeping, not a separate inter
 \label{sec:discussion}
 
 \tightparagraph{A binary score can fail in opposite directions.}
-A single binary contrast permits two opposite errors of interpretation.
-A \emph{false failure} occurs when a direction token redirects behavior, but the sampled scene makes one requested placement harder to complete.
-Reflection directly demonstrates this possibility; displacement, start-side, role-swap, and symmetric-scene cohorts support it under related interventions.
-A \emph{false pass} occurs when relation-consistent behavior under a familiar base-frame construction is treated as evidence of grounding even though the same physical goal does not transfer under reference inversion.
-There, relation preservation and token mirroring predict opposite-signed endpoint contrasts, and the observed inverted contrast is near zero.
-The four measurements and the two controls distinguish these cases because they fail in different places: a ceiling can hide a large change in placement quality, and an executed trace can change without expressing the intended relation.
-The frozen predicate remains the correct final test of whether the robot completed the task.
-It cannot, on its own, say why.
+Reflection shows how layout-dependent completion can be misread as a grounding failure; reference inversion shows how a reassuring familiar-frame response can be misread as relation-level grounding.
+The four measurements locate where these interpretations fail: a binary ceiling can hide a placement change, and an executed trace can change without expressing the intended relation.
+The frozen predicate remains the final completion test, but it cannot identify the cause.
 
 \tightparagraph{A directional gap belongs to the policy--layout pair.}
-Mirroring the movable objects reverses requested-side depth in all three reflection checkpoints and inverts $\pi_{0.5}$ completion.
-Across the seven-position sweep, the same contrast depends on reference-object position, and the symmetric scene reduces the requested-side-depth disparity in every checkpoint that still redirects on command.
-Within each comparison, the evaluated policy, prompts, and seeds are unchanged.
-The score is therefore not a layout-invariant checkpoint property.
-The surviving $\pi_{0.5}$ residual also shows why the conclusion is about the policy--layout pair rather than layout alone.
-
-\tightparagraph{The controls discriminate rather than explain away.}
-Under the symmetric scene, a powered $\pi_{0.5}$-specific residual of $20.2$ percentage points remains.
-Its paired 90\% interval $[15.0,25.2]$ excludes zero and is not contained in the prespecified $\pm15.56$-point margin, so the residual is separated from zero and also fails equivalence.
-Scene controls that dissolved every directional gap would be indistinguishable from controls that merely degraded the measurement, which makes a surviving gap the more informative outcome.
-Here, endpoint redirection remains positive, so the control discriminates a smaller residual rather than erasing the behavior being measured.
-The result does not locate that residual in the policy: factors not equalized by the scene package, such as per-side reachability among the remaining objects, could still produce it.
+Across matched scene interventions, the directional contrast changes while the policy, prompts, and seeds remain fixed, so it is not a layout-invariant checkpoint property.
+The residual that survives the symmetric scene also prevents attributing the entire gap to layout: the controls diagnose dependence without identifying its remaining cause.
 
 \tightparagraph{A minimum directional-grounding protocol.}
 For relational placement, we recommend matched base-frame \tokLR{} prompts under identical reset and policy seeds, paired with action distinctness, a signed endpoint measure, requested-side depth, and the frozen success predicate.
@@ -517,11 +503,13 @@ Exact state matching needs a resettable simulator, so hardware contact uncertain
 The object-layout conclusions hold only for the DROID/RoboLab rows that pass the endpoint-redirection control; the RoboTwin rows screen behavior, not a cross-arena replication or refutation.
 The task family is narrow as well: two named objects, one lateral relation, and one reference inversion on one $\pi_{0.5}$ checkpoint.
 
-The interventions show the measured outcome depending on scene configuration without localizing the cause inside the model or robot.
-Released material fixes each row's target-domain dataset but not episode membership or caption exposure, so we make no architecture-level or token-frequency claim and do not test whether the asymmetry is inherited from training data.
-If the measured gap ultimately tracks uneven training coverage, the attribution would change but the diagnostic conclusion would not: directional completion would still conflate grounding with coverage-dependent task competence.
+The interventions establish scene dependence but do not distinguish physical reachability from training coverage correlated with similar object configurations.
+As Sec.~\ref{sec:reflection} explains, reflection rules out a fixed directional marginal as the complete explanation; it does not rule out configuration-conditioned exposure.
+The evaluated releases disclose neither episode membership, sampling weights, training layouts, nor configuration-conditioned captions, and corpus-wide \tokLR{} counts would not recover the exposure relevant to these scenes.
+That attribution is therefore not resolvable for these released checkpoints.
 DreamZero's public demonstrations do include lateral placements referring to a bowl, so our task may sit closer to its demonstrated set than to the other rows'.
 Two measurement gaps remain: we did not track reference-object displacement under inversion, though inverted success rates show that the cube still satisfied the placement predicate (Sec.~\ref{sec:language}), and the fixed-observation diagnostic is action-space only.
+Settling the exposure question requires training policies from scratch on corpora with controlled \tokLR{} balance within matched object configurations and then rerunning the same interventions; released checkpoints cannot provide that test.
 
 % =============================================================================
 % IX. CONCLUSION
@@ -529,12 +517,10 @@ Two measurement gaps remain: we did not track reference-object displacement unde
 \section{Conclusion}
 \label{sec:conclusion}
 
-Reflection reverses completion for $\pi_{0.5}$: $4/27$ \tokL{} and $25/27$ \tokR{} successes become $25/27$ and $9/27$ after only the movable-object centers are mirrored in world coordinates, with the policy, prompts, controller, and seeds unchanged.
-Reference inversion collapses endpoint separation for $\pi_{0.5}$ from $23.28$\,cm to $0.19$\,cm on matched physical goals.
-Ceilings hide placement change: in the matched 27-seed symmetric-scene core, Nano has exactly zero binary interaction ($p=1$) alongside a $-13.9$\,cm requested-side-depth interaction.
-These controls expose distinct failures of interpretation: layout can reverse completion, inverted wording can erase familiar-frame separation, and binary success can conceal a continuous placement change.
+Matched controls expose three distinct failures of attribution.
+Reflection makes the same checkpoint favor the opposite completion direction; reference inversion collapses familiar-frame endpoint separation on matched physical goals; and Nano's binary ceiling conceals a large placement change.
+Together, these results show that scene layout and linguistic frame change the directional score, while Nano shows that a binary task boundary can conceal continuous placement change.
 Directional success therefore does not isolate language grounding.
-Evaluations should report prompt-conditioned action response, signed endpoint ordering, requested-side depth, and frozen task completion separately, and pair them with matched language and scene controls.
 
 % =============================================================================
 % REFERENCES
@@ -558,9 +544,10 @@ The robot, cameras, wrist mounting, reset posture, prompts, seeds, and controlle
 \label{app:provenance}
 
 Each row below lists the recorded artifact identifier and revision used in the evaluation.
-The public audit archive's manifests contain the available content-hash and runtime metadata, while training-episode membership and caption exposure remain undisclosed; we therefore make no token-frequency or pretraining-data claim.
+The public manifests provide the available content hashes and runtime metadata.
+They do not expose training-episode membership, sampling weights, or configuration-conditioned caption exposure.
 
-\begin{table}[t]
+\begin{center}
   \centering
   \scriptsize
   \setlength{\tabcolsep}{3pt}
@@ -590,7 +577,7 @@ The public audit archive's manifests contain the available content-hash and runt
                & \texttt{8c9dea8abbc5c91cc9e18bc3264b8915083bbe70} \\
     \bottomrule
   \end{tabular}
-\end{table}
+\end{center}
 
 The $\pi_{0.5}$ row is an internal release rather than a public repository revision, so its recorded identifier is a manifest digest, abbreviated here and given in full in the released manifest. LingBot-VA is evaluated as a base checkpoint plus a RoboTwin post-training checkpoint, so both revisions are required to reproduce it.
 
