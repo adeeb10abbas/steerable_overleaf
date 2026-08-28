@@ -361,11 +361,10 @@ In this $\pi_{0.5}$ DROID/RoboLab cohort, the mean per-seed interaction is $-1.3
 The control-layout gap is not an artifact of one policy draw: eight samples in each of 27 fixed scenes yield $41/216$ \tokL{} and $197/216$ \tokR{} successes.
 This resampling cohort covers the control layout only.
 
-\tightparagraph{A fixed directional marginal cannot explain the reversal by itself:}
-The checkpoint is unchanged across layouts, so a constant exposure-driven preference predicts a stable preference rather than a reversal.
-Exposure conditioned on object configuration remains consistent with the result.
-These experiments do not distinguish a physical effect of geometry from coverage correlated with object configuration.
-Section~\ref{sec:limitations} states the experiment needed to separate them.
+\tightparagraph{Training exposure alone cannot explain the reversal:}
+The checkpoint is identical in both layouts, so a preference learned from unbalanced training data would be constant and could not reverse when the objects move.
+A preference learned for particular object arrangements could, and these experiments do not separate that from a physical effect of geometry.
+Sec.~\ref{sec:limitations} states the experiment that would.
 
 \subsection{A graded intervention and converging controls}
 \label{sec:graded}
@@ -516,10 +515,9 @@ We interpret object-layout effects only for the DROID/RoboLab checkpoints that p
 The task family is narrow as well: two named objects, one lateral relation, and one reference inversion on one $\pi_{0.5}$ checkpoint.
 DreamZero's public demonstrations include lateral placements relative to a bowl, so this task may be closer to its demonstrated set than the other rows'.
 
-The interventions establish scene dependence but do not distinguish physical reachability from training coverage correlated with similar object configurations.
-As Sec.~\ref{sec:reflection} explains, reflection rules out a fixed directional marginal as the complete explanation; configuration-conditioned exposure remains consistent with the result.
-The evaluated releases disclose neither episode membership, sampling weights, training layouts, nor configuration-conditioned captions, and corpus-wide \tokLR{} counts would not recover the exposure relevant to these scenes.
-That attribution is therefore not resolvable for these released checkpoints.
+The interventions establish scene dependence but cannot separate physical reachability from patterns learned in training.
+As Sec.~\ref{sec:reflection} explains, reflection rules out only a learned direction preference that stays constant across layouts.
+The released checkpoints do not disclose which episodes were used, how they were sampled, or what object arrangements appeared with each direction in the training data, so the available evidence cannot separate those explanations.
 Two measurement gaps remain.
 We did not track reference-object displacement under inversion, although inverted success rates show that the cube still satisfied the placement predicate (Sec.~\ref{sec:language}).
 The fixed-observation diagnostic measures action space only.
@@ -594,7 +592,7 @@ These unpaired totals are descriptive summaries, not a separate interaction test
 
 Each row below lists the recorded artifact identifier and revision used in the evaluation.
 The public manifests provide the available content hashes and runtime metadata.
-They do not expose training-episode membership, sampling weights, or configuration-conditioned caption exposure.
+They do not disclose which training episodes were used, how those episodes were sampled, or which object arrangements appeared with each directional caption.
 
 \begin{center}
   \centering
