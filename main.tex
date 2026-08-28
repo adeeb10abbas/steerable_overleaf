@@ -4,7 +4,7 @@
 % in Language-Conditioned Manipulation
 %
 % Single-file source. Only references.bib and figures/ are external.
-% Section order: Introduction, Related Work, Audit Design, Reflection,
+% Section order: Introduction, Related Work, Experimental Design, Reflection,
 % Reference Inversion, Symmetric Scene, Discussion, Limitations, Conclusion,
 % references, Appendix A.
 % =============================================================================
@@ -100,8 +100,9 @@ Anonymous Authors%
 Language-conditioned manipulation has seen rapid progress, with generalist policies now following relational commands such as placing an object to the left or right of another.
 Directional success gaps between opposite commands have become a common way to assess whether these policies ground language, but such comparisons conflate several distinct questions, limiting a nuanced understanding of current capabilities.
 
-In this paper, we examine in detail what a directional success gap measures.
-We develop an audit that separates the score into executed-action response, endpoint ordering, requested-side depth, and task completion, and apply it with matched interventions in a controlled setting, holding the checkpoint, controller, and seeds fixed while changing either the object layout or the linguistic reference frame.
+In this paper, we test what a directional success gap measures.
+We separate the comparison into executed-action response, endpoint ordering, requested-side depth, and task completion.
+We then apply matched interventions in a controlled setting, holding the checkpoint, controller, and seeds fixed while changing either the object layout or the linguistic reference frame.
 We evaluate released checkpoints across two simulators with prespecified outcomes and equivalence tests.
 We find that matched layout interventions change the requested-side-depth contrast in every checkpoint that passes the prespecified endpoint-redirection control, and that layout alone can reverse which direction completes more often under an unchanged predicate.
 Moreover, in the reference-inversion cohort, restating the same physical goals from the other object's reference frame collapses the endpoint separation that familiar wording produces.
@@ -196,9 +197,9 @@ Recent large-scale evaluations, including the TRI study of Large Behavior Models
 We share that emphasis on controlled evaluation but ask a different question: what changes between two relational commands at the same reset and sampling seed?
 
 % =============================================================================
-% III. AUDIT DESIGN
+% III. EXPERIMENTAL DESIGN
 % =============================================================================
-\section{Matched Audit Design}
+\section{Experimental Design}
 \label{sec:method}
 
 We layer two controls on the same base-frame prompt pair.
@@ -294,7 +295,7 @@ Every behavioral failure stays in its denominator.
 Marginal binary rates use Wilson intervals, paired continuous contrasts use seed-clustered percentile bootstraps with 20,000 resamples and exact sign tests, and layout interactions use exact within-seed label permutations.
 Absence claims require two one-sided equivalence tests (TOST) against prespecified margins, rather than nonsignificance~\cite{wilson1927interval,efron1994bootstrap,schuirmann1987tost}.
 Prompts, seeds, success tests, target quantities, margins, and the failure-label order are all fixed before the runs they affect.
-The public audit archive\footnote{\url{https://github.com/adeeb10abbas/steerable}} records the available manifests, seeds, checkpoint revisions, and freeze times for the reported cohorts.
+The public archive\footnote{\url{https://github.com/adeeb10abbas/steerable}} records the available manifests, seeds, checkpoint revisions, and freeze times for the reported cohorts.
 
 \tightparagraph{Every base-frame pair changes the executed action, and most redirect the endpoint correctly:}
 All 324 minimal pairs across the eight screen rows execute different action sequences: 135 DROID/RoboLab pairs and 189 RoboTwin pairs.
@@ -469,7 +470,7 @@ For $\pi_{0.5}$, 341 prompt pairs at each endpoint show the binary \tokR{}-minus
 At the symmetric endpoint, the paired 90\% interval for the binary gap is $[15.0,25.2]$ points against a prespecified $\pm15.56$-point margin.
 The requested-depth interval is $[4.85,6.66]$\,cm against $\pm4.15$\,cm.
 Neither meets its equivalence criterion.
-The prespecified power audit at $n=341$ gives an 80\%-power minimum detectable effect of 7.8 percentage points for the binary gap, relative to the 15.56-point equivalence margin.
+The prespecified power analysis at $n=341$ gives an 80\%-power minimum detectable effect of 7.8 percentage points for the binary gap, relative to the 15.56-point equivalence margin.
 We also analyze a separately registered matched core of 27 seeds shared across layouts.
 Its binary and requested-depth interactions are $-51.9$ points (95\% CI $[-81.5,-22.2]$, $p=.00786$) and $-12.4$\,cm (95\% CI $[-19.7,-4.9]$, $p=.00348$), respectively.
 Base-frame redirection at the symmetric endpoint is $+23.9$\,cm, with $335/341$ positive pairs.
