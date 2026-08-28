@@ -145,15 +145,13 @@ The controls change what a directional score can support.
 A large gap can be a false grounding failure when one layout makes one requested placement harder to complete; a reassuring base-frame response can be a false pass when it does not survive the tested equivalent expression of the relation.
 Reflection exposes the first error, reference inversion exposes the second, and the endpoint decomposition makes both visible.
 
-Through these experiments, we find that:
-\begin{enumerate}
-    \item For $\pi_{0.5}$, mirroring only the movable-object centers reverses which direction completes more often while the checkpoint, prompts, controller, and seeds stay fixed. The measured gap therefore belongs to the policy--layout pair rather than to the checkpoint alone.
-    \item For Nano, requested-side depth changes across seven tested reference-object positions. This establishes a graded dependence over those positions, not an interior linear law.
-    \item A binary completion interaction can be zero while matched placement changes substantially, so completion alone can miss layout dependence.
-    \item Familiar base-frame endpoint separation does not survive the tested reference inversion. The experiment does not distinguish failed relation transfer from sensitivity to out-of-distribution phrasing.
-    \item The tested symmetric scene shrinks the $\pi_{0.5}$ gap but leaves a residual that does not meet the equivalence criterion.
-\end{enumerate}
-These tests require no retraining, new hardware, or change to the frozen success predicate.
+We make three contributions, ordered by the claims they support:
+\begin{itemize}
+    \item \textbf{A matched object-layout intervention.} Moving only the movable objects, with the checkpoint, prompts, controller, and seeds unchanged, reverses which direction completes more often. Graded displacement and symmetric-scene controls show the same dependence in continuous placement.
+    \item \textbf{A reference-inversion control for relation-level transfer.} Holding each physical goal and the manipulated object fixed while restating the relation from the other object's frame removes the endpoint separation that the familiar wording produces.
+    \item \textbf{A decomposition that separates redirection from completion.} Executed-action response, signed endpoint ordering, requested-side depth, and frozen task completion locate where a directional contrast changes, and expose layout-dependent placement even where binary success sits at ceiling.
+\end{itemize}
+None requires retraining, new hardware, or a change to the frozen success predicate.
 
 \begin{figure*}[t]
   \centering
