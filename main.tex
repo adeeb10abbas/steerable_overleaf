@@ -97,14 +97,16 @@ Anonymous Authors%
 % ABSTRACT
 % =============================================================================
 \begin{abstract}
-Opposite spatial commands are often compared with a binary success gap and read as evidence about language grounding.
-That score also depends on the scene in which the command is executed.
-We audit this attribution across released checkpoints in two simulators, using matched interventions that hold the checkpoint, controller, and seeds fixed while changing either the object layout or the linguistic reference frame.
-Mirroring only the movable-object centers shifts the requested-side-depth contrast in the same direction in every checkpoint tested, and in $\pi_{0.5}$ it reverses which direction completes under the unchanged success predicate.
-Making the movable-object geometry symmetric reduces the requested-side-depth disparity in every checkpoint that still redirects on command, though a $\pi_{0.5}$ binary gap remains and does not meet the prespecified equivalence criterion.
-Restating the same physical goals from the other object's reference frame collapses the endpoint separation that the familiar wording produces.
-And a binary completion interaction can be exactly zero while matched requested-side depth decreases substantially.
-Directional success is therefore a property of the policy--layout pair and cannot, by itself, isolate language grounding.
+Language-conditioned manipulation has seen rapid progress, with generalist policies now following relational commands such as placing an object to the left or right of another.
+Directional success gaps between opposite commands have become a common way to assess whether these policies ground language, but such comparisons conflate several distinct questions, limiting a nuanced understanding of current capabilities.
+
+In this paper, we examine in detail what a directional success gap measures.
+We develop an audit that separates the score into executed-action response, endpoint ordering, requested-side depth, and task completion, and apply it with matched interventions in a controlled setting, holding the checkpoint, controller, and seeds fixed while changing either the object layout or the linguistic reference frame.
+We evaluate released checkpoints across two simulators with prespecified outcomes and equivalence tests.
+We find that matched layout interventions change the requested-side-depth contrast in every checkpoint that passes the prespecified endpoint-redirection control, and that layout alone can reverse which direction completes more often under an unchanged predicate.
+Moreover, in the reference-inversion cohort, restating the same physical goals from the other object's reference frame collapses the endpoint separation that familiar wording produces.
+These results show that directional success reflects both scene geometry and linguistic form, and that neither a large nor a small gap identifies grounding on its own.
+Project page: \url{https://github.com/adeeb10abbas/steerable}
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -490,6 +492,12 @@ Appendix~\ref{app:failure_labels} reports the descriptive failure-label bookkeep
 Reflection shows how layout-dependent completion can be misread as a grounding failure; reference inversion shows how a reassuring familiar-frame response can be misread as relation-level grounding.
 The measurements locate both errors: a binary ceiling can hide a placement change, and an executed trace can change without expressing the intended relation.
 The frozen predicate remains the final completion test, but it cannot identify the cause.
+
+\tightparagraph{Binary thresholding can expose or hide placement shifts.}
+The frozen predicate maps pickup, transport, release, and placement into one completion label.
+A layout-dependent endpoint shift can coincide with a reversed completion advantage, as under $\pi_{0.5}$ reflection, or with no change in the binary interaction, as at Nano's ceiling.
+These cohorts do not establish which task stage or boundary crossing produces the difference.
+They show that completion can reveal or conceal a continuous placement response without identifying its source.
 
 \tightparagraph{A directional gap belongs to the policy--layout pair.}
 For $\pi_{0.5}$, reflection changes requested-side depth by $-34.6$\,cm while the policy, prompts, and seeds remain fixed.
