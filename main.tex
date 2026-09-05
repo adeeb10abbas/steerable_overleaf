@@ -78,7 +78,7 @@ Ali-Adeeb Abbas$^{1,2}$, Esmaeil Seraj$^{2}$, Behrad Toghi$^{2}$ and Taskin Padi
 \setlength{\dbltextfloatsep}{10pt plus 2pt minus 2pt}
 \setlength{\dblfloatsep}{10pt plus 2pt minus 2pt}
 
-\title{Move the Objects, Move the Score: What Directional Success Gaps Measure in Language-Conditioned Manipulation}
+\title{Move the Objects, Move the Score: Understanding Directional Success Gaps in Language-conditioned Manipulation}
 \hypersetup{pdftitle={Move the Objects, Move the Score: What Directional Success Gaps Measure in Language-Conditioned Manipulation}}
 \author{%
 \ifanonymous
@@ -135,7 +135,6 @@ A single binary contrast can therefore produce two opposite errors: a false fail
 Our central finding is an invariance failure: the directional gap is a property of the policy--layout pair, not a layout-invariant property of the checkpoint.
 Reflection reverses completion with checkpoint, prompts, controller, and seeds fixed (Fig.~\ref{fig:reflection}); Sec.~\ref{sec:reflection} gives the paired analysis.
 
-Scene dependence is not the only threat to interpretation.
 When the same physical goals are expressed from the other object's reference frame---``cube left of bowl'' becomes ``bowl right of cube,'' and conversely---the familiar base-frame endpoint separation nearly vanishes.
 Base-frame sensitivity to \tokL{} and \tokR{} therefore does not establish that the underlying relation transfers across linguistic frames.
 
@@ -250,7 +249,7 @@ We report
 \begin{align}
 A_i &= \mathbb{1}[\text{common action prefixes differ}],\\
 D_i &= y_i^L-y_i^R,\\
-S_i^d &= \mathbb{1}[\text{frozen task predicate is satisfied for }d],\\
+S_i^d &= \mathbbm{1}[\text{frozen task predicate is satisfied for }d],\\
 M_i^L &= y_i^L,\qquad M_i^R = -y_i^R.
 \end{align}
 $A_i$ uses bitwise inequality on the complete common executed prefix and tests prompt response, not relation semantics.
